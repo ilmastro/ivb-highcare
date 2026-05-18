@@ -1,0 +1,64 @@
+{
+  "persons": [
+    {
+      "id": "vp",
+      "initials": "VP",
+      "avatar_color": "av-sky",
+      "name": "Verpleegpost IVB HC",
+      "role": "24 uur per dag aanwezig",
+      "info": "Vraag uw begeleider om het nummer",
+      "info_color": "ci-sky"
+    },
+    {
+      "id": "pb",
+      "initials": "PB",
+      "avatar_color": "av-teal",
+      "name": "Persoonlijk Begeleider",
+      "role": "4 vaste begeleiders — uw aanspreekpunt",
+      "info": "Zie uw dagrooster",
+      "info_color": "ci-teal"
+    },
+    {
+      "id": "pvp",
+      "initials": "PV",
+      "avatar_color": "av-pink",
+      "name": "Patiëntenvertrouwenspersoon",
+      "role": "Onafhankelijk en vertrouwelijk",
+      "info": "Nummer op te vragen bij verpleging",
+      "info_color": "ci-sky"
+    },
+    {
+      "id": "mw",
+      "initials": "MW",
+      "avatar_color": "av-coral",
+      "name": "Maatschappelijk werk",
+      "role": "Uitkeringen & praktische zaken",
+      "info": "Via uw behandelcoördinator",
+      "info_color": "ci-coral"
+    },
+    {
+      "id": "at",
+      "initials": "AT",
+      "avatar_color": "av-gold",
+      "name": "Activiteitentherapie",
+      "role": "Dagactiviteiten en bezigheid",
+      "info": "Intern: 5789",
+      "info_color": "ci-gold"
+    },
+    {
+      "id": "tu",
+      "initials": "TU",
+      "avatar_color": "av-purple",
+      "name": "De Tuin",
+      "role": "Tuinactiviteiten (vrijheden vereist)",
+      "info": "Intern: 2258",
+      "info_color": "ci-teal"
+    }
+  ],
+  "tijden": [
+    { "label": "Bezoek ma t/m vr", "tijd": "19:00 – 21:00 uur" },
+    { "label": "Bezoek weekend & feestdagen", "tijd": "14:00–17:00 en 19:00–21:00" },
+    { "label": "SOP dagelijks", "tijd": "08:00 – 21:00 uur" }
+  ],
+  "tijden_note": "Andere tijden mogelijk in overleg met de afdeling."
+}

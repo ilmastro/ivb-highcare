@@ -1,0 +1,107 @@
+{
+  "cards": [
+    {
+      "id": "at",
+      "icon": "ti-palette",
+      "color": "ic-coral",
+      "title": "Activiteitentherapie (AT)",
+      "subtitle": "Intern: 5789",
+      "body": "Samen met u wordt onderzocht wat een passende dagactiviteit voor u is.",
+      "schedule": [
+        { "day": "Maandag t/m vrijdag", "rows": [
+          { "time": "09:00 – 09:30", "activity": "Wandeling" },
+          { "time": "13:30 – 16:00", "activity": "Activiteiten" }
+        ]}
+      ]
+    },
+    {
+      "id": "tuin",
+      "icon": "ti-plant",
+      "color": "ic-green",
+      "title": "De Tuin",
+      "subtitle": "Intern: 2258 — vrijheden vereist",
+      "body": "Binnen en buiten allerlei activiteiten rondom tuinonderhoud, creaties en de seizoenen. Vrijheden zijn hiervoor vereist.",
+      "schedule": [
+        { "day": "Maandag t/m donderdag", "rows": [
+          { "time": "09:00 – 11:30", "activity": "Tuinactiviteiten" },
+          { "time": "13:30 – 16:00", "activity": "Tuinactiviteiten" }
+        ]}
+      ]
+    },
+    {
+      "id": "sport",
+      "icon": "ti-run",
+      "color": "ic-teal",
+      "title": "Sporttijden",
+      "subtitle": "Fitness, wandelen, yoga & meer",
+      "body": "",
+      "schedule": [
+        { "day": "Maandag", "rows": [
+          { "time": "13:15 – 15:00", "activity": "Fitness & tafeltennis" },
+          { "time": "15:30 – 16:30", "activity": "Gymzaal (15:15 verzamelen SOP)" },
+          { "time": "18:30 – 19:30", "activity": "Wandelen (verzamelen SOP)" },
+          { "time": "20:00 – 21:00", "activity": "Fitness & tafeltennis" },
+          { "time": "21:00 – 21:45", "activity": "Yoga / ontspanning" }
+        ]},
+        { "day": "Dinsdag", "rows": [
+          { "time": "11:00 – 12:00", "activity": "Fitness & tafeltennis" },
+          { "time": "13:15 – 14:00", "activity": "Fitness & tafeltennis" },
+          { "time": "16:00 – 17:00", "activity": "Mountainbiken" },
+          { "time": "18:30 – 19:30", "activity": "Wandelen (verzamelen SOP)" },
+          { "time": "20:00 – 21:00", "activity": "Fitness & tafeltennis" },
+          { "time": "21:00 – 21:45", "activity": "Yoga / ontspanning" }
+        ]},
+        { "day": "Woensdag", "rows": [
+          { "time": "10:00 – 11:00", "activity": "Fitness & tafeltennis" },
+          { "time": "11:00 – 12:00", "activity": "Hardlopen" }
+        ]},
+        { "day": "Donderdag", "rows": [
+          { "time": "10:15 – 11:00", "activity": "Fitness & tafeltennis" }
+        ]},
+        { "day": "Vrijdag", "rows": [
+          { "time": "15:15 – 16:00", "activity": "Fitness & tafeltennis" }
+        ]}
+      ]
+    },
+    {
+      "id": "modules",
+      "icon": "ti-puzzle",
+      "color": "ic-purple",
+      "title": "Modules",
+      "subtitle": "Behandelprogramma's",
+      "body": "De Carrousel vindt iedere woensdag plaats met een vast thema — bijvoorbeeld voeding.",
+      "modules_list": ["Emotieregulatie training", "Sociale vaardigheidstraining", "Carrousel (woensdag)"],
+      "schedule": []
+    },
+    {
+      "id": "sop",
+      "icon": "ti-sofa",
+      "color": "ic-peach",
+      "title": "SOP — Sociaal Ontmoetingsplek",
+      "subtitle": "Gemeenschappelijke ruimte",
+      "body": "De SOP is de plek waar u anderen kunt ontmoeten. Diverse activiteiten en wandelingen vertrekken vanaf hier.",
+      "schedule": [
+        { "day": "Dagelijks", "rows": [
+          { "time": "08:00 – 21:00", "activity": "Open" }
+        ]}
+      ]
+    },
+    {
+      "id": "bezoek",
+      "icon": "ti-clock",
+      "color": "ic-sky",
+      "title": "Bezoektijden",
+      "subtitle": "Wanneer mogen bezoekers komen?",
+      "body": "Andere tijden zijn mogelijk in overleg met de afdeling.",
+      "schedule": [
+        { "day": "Maandag t/m vrijdag", "rows": [
+          { "time": "19:00 – 21:00", "activity": "" }
+        ]},
+        { "day": "Weekend & feestdagen", "rows": [
+          { "time": "14:00 – 17:00", "activity": "" },
+          { "time": "19:00 – 21:00", "activity": "" }
+        ]}
+      ]
+    }
+  ]
+}

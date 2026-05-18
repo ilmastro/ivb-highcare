@@ -1,0 +1,249 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+locale: nl
+
+collections:
+
+  # ─── HOME ────────────────────────────────────────────────────
+  - name: "home"
+    label: "🏠 Home pagina"
+    files:
+      - name: "home"
+        label: "Home inhoud"
+        file: "content/home.json"
+        format: json
+        fields:
+          - { label: "Welkomsttitel", name: "hero_title", widget: "string" }
+          - { label: "Afdelingsnaam (onder titel)", name: "hero_ward", widget: "string" }
+          - { label: "Welkomsttekst", name: "hero_body", widget: "text" }
+          - { label: "Mededeling (blauw blokje)", name: "notice_text", widget: "text" }
+          - { label: "Informatiemap beschrijving", name: "infomap_body", widget: "text" }
+
+  # ─── TEAM ────────────────────────────────────────────────────
+  - name: "team"
+    label: "👥 Behandelteam"
+    files:
+      - name: "team"
+        label: "Team kaarten"
+        file: "content/team.json"
+        format: json
+        fields:
+          - label: "Kaarten"
+            name: "cards"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "ID (niet wijzigen)", name: "id", widget: "string" }
+              - label: "Icoon"
+                name: "icon"
+                widget: "select"
+                options:
+                  - { label: "Klembord hart", value: "ti-clipboard-heart" }
+                  - { label: "Hersenen", value: "ti-brain" }
+                  - { label: "Stethoscoop", value: "ti-stethoscope" }
+                  - { label: "Gebouw gemeenschap", value: "ti-building-community" }
+                  - { label: "Hart gebruiker", value: "ti-user-heart" }
+                  - { label: "Sterren", value: "ti-sparkles" }
+                  - { label: "Ster gebruiker", value: "ti-user-star" }
+                  - { label: "Netwerk", value: "ti-network" }
+                  - { label: "Berichten", value: "ti-messages" }
+                  - { label: "Telefoon", value: "ti-phone" }
+                  - { label: "Schild check", value: "ti-shield-check" }
+              - label: "Kleur"
+                name: "color"
+                widget: "select"
+                options:
+                  - { label: "Blauw (sky)", value: "ic-sky" }
+                  - { label: "Roze", value: "ic-pink" }
+                  - { label: "Teal/groen", value: "ic-teal" }
+                  - { label: "Goud/geel", value: "ic-gold" }
+                  - { label: "Koraal/oranje", value: "ic-coral" }
+                  - { label: "Paars", value: "ic-purple" }
+                  - { label: "Donkerblauw", value: "ic-navy" }
+                  - { label: "Perzik", value: "ic-peach" }
+                  - { label: "Groen", value: "ic-green" }
+                  - { label: "Rood", value: "ic-red" }
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Subtitel", name: "subtitle", widget: "string" }
+              - { label: "Tekst (gebruik lege regel voor nieuwe alinea)", name: "body", widget: "text" }
+
+  # ─── PROGRAMMA ───────────────────────────────────────────────
+  - name: "programma"
+    label: "📅 Dagprogramma"
+    files:
+      - name: "programma"
+        label: "Programma kaarten"
+        file: "content/programma.json"
+        format: json
+        fields:
+          - label: "Kaarten"
+            name: "cards"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "ID (niet wijzigen)", name: "id", widget: "string" }
+              - label: "Icoon"
+                name: "icon"
+                widget: "select"
+                options:
+                  - { label: "Palet", value: "ti-palette" }
+                  - { label: "Plant", value: "ti-plant" }
+                  - { label: "Hardlopen", value: "ti-run" }
+                  - { label: "Puzzel", value: "ti-puzzle" }
+                  - { label: "Bank/sofa", value: "ti-sofa" }
+                  - { label: "Klok", value: "ti-clock" }
+                  - { label: "Kalender", value: "ti-calendar" }
+              - label: "Kleur"
+                name: "color"
+                widget: "select"
+                options:
+                  - { label: "Blauw (sky)", value: "ic-sky" }
+                  - { label: "Roze", value: "ic-pink" }
+                  - { label: "Teal/groen", value: "ic-teal" }
+                  - { label: "Goud/geel", value: "ic-gold" }
+                  - { label: "Koraal/oranje", value: "ic-coral" }
+                  - { label: "Paars", value: "ic-purple" }
+                  - { label: "Donkerblauw", value: "ic-navy" }
+                  - { label: "Perzik", value: "ic-peach" }
+                  - { label: "Groen", value: "ic-green" }
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Subtitel", name: "subtitle", widget: "string" }
+              - { label: "Tekst (optioneel)", name: "body", widget: "text", required: false }
+              - label: "Modules lijst (alleen voor Modules kaart)"
+                name: "modules_list"
+                widget: "list"
+                required: false
+                field: { label: "Module naam", name: "item", widget: "string" }
+              - label: "Rooster"
+                name: "schedule"
+                widget: "list"
+                required: false
+                summary: "{{fields.day}}"
+                fields:
+                  - { label: "Dag", name: "day", widget: "string" }
+                  - label: "Tijden"
+                    name: "rows"
+                    widget: "list"
+                    fields:
+                      - { label: "Tijd", name: "time", widget: "string" }
+                      - { label: "Activiteit", name: "activity", widget: "string", required: false }
+
+  # ─── REGELS ──────────────────────────────────────────────────
+  - name: "regels"
+    label: "📋 Regels & Visie"
+    files:
+      - name: "regels"
+        label: "Regels kaarten"
+        file: "content/regels.json"
+        format: json
+        fields:
+          - label: "Kaarten"
+            name: "cards"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "ID (niet wijzigen)", name: "id", widget: "string" }
+              - label: "Icoon"
+                name: "icon"
+                widget: "select"
+                options:
+                  - { label: "Oog", value: "ti-eye" }
+                  - { label: "Koffie", value: "ti-coffee" }
+                  - { label: "Maan", value: "ti-moon" }
+                  - { label: "Mobiel", value: "ti-device-mobile" }
+                  - { label: "Verbod", value: "ti-ban" }
+                  - { label: "Roken", value: "ti-smoking" }
+                  - { label: "Fles", value: "ti-bottle" }
+                  - { label: "Gereedschap", value: "ti-tools" }
+                  - { label: "Camera uit", value: "ti-camera-off" }
+                  - { label: "Schild check", value: "ti-shield-check" }
+                  - { label: "Lijst check", value: "ti-list-check" }
+              - label: "Kleur"
+                name: "color"
+                widget: "select"
+                options:
+                  - { label: "Blauw (sky)", value: "ic-sky" }
+                  - { label: "Roze", value: "ic-pink" }
+                  - { label: "Teal/groen", value: "ic-teal" }
+                  - { label: "Goud/geel", value: "ic-gold" }
+                  - { label: "Koraal/oranje", value: "ic-coral" }
+                  - { label: "Paars", value: "ic-purple" }
+                  - { label: "Donkerblauw", value: "ic-navy" }
+                  - { label: "Perzik", value: "ic-peach" }
+                  - { label: "Rood", value: "ic-red" }
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Subtitel", name: "subtitle", widget: "string" }
+              - { label: "Tekst (gebruik lege regel voor nieuwe alinea)", name: "body", widget: "text", required: false }
+              - label: "Waarschuwing (geel blokje, optioneel)"
+                name: "warning"
+                widget: "string"
+                required: false
+              - label: "Verboden items (lijst met kruisjes)"
+                name: "rules"
+                widget: "list"
+                required: false
+                field: { label: "Regel", name: "item", widget: "string" }
+              - label: "Tijden (info rijen)"
+                name: "tijden"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Tijd", name: "tijd", widget: "string" }
+              - label: "Behandelfases (alleen voor Visie kaart)"
+                name: "phases"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Fase titel", name: "title", widget: "string" }
+                  - { label: "Fase beschrijving", name: "desc", widget: "text" }
+
+  # ─── CONTACT ─────────────────────────────────────────────────
+  - name: "contact"
+    label: "📞 Contact"
+    files:
+      - name: "contact"
+        label: "Contactpersonen & tijden"
+        file: "content/contact.json"
+        format: json
+        fields:
+          - label: "Contactpersonen"
+            name: "persons"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "ID (niet wijzigen)", name: "id", widget: "string" }
+              - { label: "Initialen (2 letters)", name: "initials", widget: "string" }
+              - label: "Avatar kleur"
+                name: "avatar_color"
+                widget: "select"
+                options:
+                  - { label: "Blauw", value: "av-sky" }
+                  - { label: "Teal", value: "av-teal" }
+                  - { label: "Roze", value: "av-pink" }
+                  - { label: "Koraal", value: "av-coral" }
+                  - { label: "Goud", value: "av-gold" }
+                  - { label: "Paars", value: "av-purple" }
+              - { label: "Naam", name: "name", widget: "string" }
+              - { label: "Rol / beschrijving", name: "role", widget: "string" }
+              - { label: "Contactinfo (telefoonnummer of instructie)", name: "info", widget: "string" }
+              - label: "Info kleur"
+                name: "info_color"
+                widget: "select"
+                options:
+                  - { label: "Blauw", value: "ci-sky" }
+                  - { label: "Teal", value: "ci-teal" }
+                  - { label: "Goud", value: "ci-gold" }
+                  - { label: "Koraal", value: "ci-coral" }
+          - label: "Openingstijden"
+            name: "tijden"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Tijd", name: "tijd", widget: "string" }
+          - { label: "Toelichting tijden", name: "tijden_note", widget: "string" }

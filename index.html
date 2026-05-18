@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0f1117" id="themeMetaColor">
+<title>IVB High Care</title>
+<link rel="manifest" href="manifest.json">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+:root{--bg:#0f1117;--bg2:#161b26;--surface:#1c2235;--surface2:#232840;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--text1:#eef1f8;--text2:#8b95b0;--text3:#4a5270;--navy:#2d3b8e;--pink:#e84f8c;--teal:#3dbfbf;--gold:#f5c842;--coral:#f07a3a;--purple:#7b5ea7;--sky:#4ab8e8;--peach:#f0a07a;--accent:var(--sky);--accent2:var(--teal);--accent-bg:rgba(74,184,232,0.12);--radius:14px;--radius-sm:8px;--nav-h:68px;--header-h:64px;--font-body:'DM Sans',sans-serif;--font-display:'DM Serif Display',serif;--tr:0.2s ease;}
+[data-theme="light"]{--bg:#f2f4f9;--bg2:#ffffff;--surface:#ffffff;--surface2:#edf0f7;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.13);--text1:#111520;--text2:#4a5270;--text3:#9ba3b8;--sky:#2d6ecf;--teal:#0d8a7a;--accent-bg:rgba(45,110,207,0.08);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text1);-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr);}
+#app{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto;position:relative;overflow:hidden;}
+.app-header{height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 18px;flex-shrink:0;}
+.header-left{display:flex;align-items:center;gap:11px;}
+.header-logo{width:34px;height:34px;flex-shrink:0;}
+.header-logo img{width:100%;height:100%;border-radius:8px;object-fit:contain;}
+.header-title{font-family:var(--font-display);font-size:17px;color:var(--text1);line-height:1.1;}
+.header-sub{font-size:10px;color:var(--teal);letter-spacing:0.07em;text-transform:uppercase;font-weight:600;margin-top:1px;}
+.header-actions{display:flex;gap:8px;}
+.icon-btn{width:36px;height:36px;background:var(--surface);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;transition:all var(--tr);}
+.btn-icon{font-size:17px;line-height:1;}
+.content-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;background:var(--bg);}
+.content-area::-webkit-scrollbar{display:none;}
+.bottom-nav{height:var(--nav-h);background:var(--bg2);border-top:1px solid var(--border);display:flex;align-items:stretch;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom);}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--text3);transition:color var(--tr);position:relative;padding:6px 0;}
+.nav-item i{font-size:22px;}
+.nav-item span{font-size:10px;font-weight:500;}
+.nav-item.active::before{content:'';position:absolute;top:0;left:20%;right:20%;height:2.5px;border-radius:0 0 3px 3px;}
+#nav-home.active{color:var(--sky);}#nav-home.active::before{background:var(--sky);}
+#nav-team.active{color:var(--pink);}#nav-team.active::before{background:var(--pink);}
+#nav-dag.active{color:var(--teal);}#nav-dag.active::before{background:var(--teal);}
+#nav-regels.active{color:var(--gold);}#nav-regels.active::before{background:var(--gold);}
+#nav-contact.active{color:var(--coral);}#nav-contact.active::before{background:var(--coral);}
+.panel{display:none;padding:16px 14px 28px;animation:fadeIn 0.18s ease;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.home-hero{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;}
+.home-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(74,184,232,0.15) 0%,transparent 70%);border-radius:50%;}
+.home-hero::after{content:'';position:absolute;bottom:-30px;left:-20px;width:100px;height:100px;background:radial-gradient(circle,rgba(232,79,140,0.10) 0%,transparent 70%);border-radius:50%;}
+.hero-icon{font-size:34px;color:var(--pink);margin-bottom:10px;}
+.hero-title{font-family:var(--font-display);font-size:21px;color:var(--text1);line-height:1.2;}
+.hero-ward{font-size:11px;color:var(--teal);letter-spacing:0.07em;text-transform:uppercase;font-weight:600;margin:6px 0 10px;}
+.hero-body{font-size:13px;color:var(--text2);line-height:1.65;}
+.notice{background:rgba(74,184,232,0.08);border:1px solid rgba(74,184,232,0.2);border-radius:var(--radius-sm);padding:11px 13px;display:flex;gap:10px;align-items:flex-start;margin-bottom:14px;}
+.notice i{color:var(--sky);font-size:17px;flex-shrink:0;margin-top:1px;}
+.notice p{font-size:12.5px;color:var(--text2);line-height:1.55;}
+.notice strong{color:var(--text1);}
+.section-label{font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin:0 0 10px;}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.quick-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 13px;cursor:pointer;transition:all var(--tr);user-select:none;position:relative;overflow:hidden;}
+.quick-tile::before{content:'';position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;opacity:0.12;}
+.quick-tile:active{transform:scale(0.97);}
+.qt-icon{font-size:26px;margin-bottom:9px;display:block;}
+.qt-label{font-size:13px;font-weight:600;color:var(--text1);}
+.qt-sub{font-size:11px;color:var(--text2);margin-top:3px;}
+.qt-team .qt-icon{color:var(--pink);}.qt-team::before{background:var(--pink);}
+.qt-dag .qt-icon{color:var(--teal);}.qt-dag::before{background:var(--teal);}
+.qt-regels .qt-icon{color:var(--gold);}.qt-regels::before{background:var(--gold);}
+.qt-contact .qt-icon{color:var(--coral);}.qt-contact::before{background:var(--coral);}
+.acc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:border-color var(--tr);}
+.acc-card.open{border-color:var(--border2);}
+.acc-header{padding:13px 15px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;}
+.acc-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;color:#fff;}
+.ic-sky{background:linear-gradient(135deg,#2980b9,#4ab8e8);}
+.ic-pink{background:linear-gradient(135deg,#a01860,#e84f8c);}
+.ic-teal{background:linear-gradient(135deg,#1a8080,#3dbfbf);}
+.ic-gold{background:linear-gradient(135deg,#b8860b,#f5c842);}
+.ic-coral{background:linear-gradient(135deg,#b84a10,#f07a3a);}
+.ic-purple{background:linear-gradient(135deg,#4a2a7a,#7b5ea7);}
+.ic-navy{background:linear-gradient(135deg,#1a2060,#2d3b8e);}
+.ic-peach{background:linear-gradient(135deg,#b85530,#f0a07a);}
+.ic-red{background:linear-gradient(135deg,#8b1a1a,#e05c5c);}
+.ic-green{background:linear-gradient(135deg,#1a5a2a,#3dbf7a);}
+.acc-meta{flex:1;min-width:0;}
+.acc-title{font-size:14px;font-weight:600;color:var(--text1);}
+.acc-sub{font-size:11.5px;color:var(--text2);margin-top:2px;}
+.acc-chevron{font-size:18px;color:var(--text3);transition:transform 0.22s ease;flex-shrink:0;}
+.acc-card.open .acc-chevron{transform:rotate(180deg);color:var(--sky);}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.2s ease;padding:0 15px;}
+.acc-card.open .acc-body{max-height:1400px;padding:0 15px 16px;}
+.acc-body-inner{border-top:1px solid var(--border);padding-top:13px;}
+.acc-body p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:9px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body p strong{color:var(--text1);font-weight:600;}
+.acc-body h4{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin:13px 0 7px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:500;padding:4px 10px;border-radius:20px;white-space:nowrap;}
+.tag-sky{background:rgba(74,184,232,0.14);color:var(--sky);}
+.tag-pink{background:rgba(232,79,140,0.13);color:var(--pink);}
+.tag-teal{background:rgba(61,191,191,0.13);color:var(--teal);}
+.tag-gold{background:rgba(245,200,66,0.14);color:var(--gold);}
+.tag-coral{background:rgba(240,122,58,0.13);color:var(--coral);}
+.tag-purple{background:rgba(123,94,167,0.14);color:var(--purple);}
+.info-row{display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.info-row:last-child{border-bottom:none;}
+.info-row>.ir-icon{font-size:17px;flex-shrink:0;margin-top:1px;}
+.ir-label{color:var(--text2);min-width:110px;flex-shrink:0;}
+.ir-value{color:var(--text1);}
+.rule-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.rule-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;display:flex;gap:11px;align-items:flex-start;}
+.rule-x{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;color:#fff;background:#e05c5c;}
+.rule-text{font-size:13px;color:var(--text2);line-height:1.55;}
+.schedule-block{margin:8px 0;}
+.schedule-day{font-size:11px;font-weight:600;color:var(--teal);letter-spacing:0.05em;text-transform:uppercase;margin:10px 0 5px;}
+.schedule-row{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;}
+.schedule-row:last-child{border-bottom:none;}
+.s-time{color:var(--gold);min-width:100px;flex-shrink:0;font-weight:500;}
+.s-act{color:var(--text2);}
+.contact-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 15px;margin-bottom:10px;display:flex;gap:13px;align-items:center;}
+.avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;}
+.av-sky{background:linear-gradient(135deg,#1a6090,#4ab8e8);}
+.av-teal{background:linear-gradient(135deg,#0a5050,#3dbfbf);}
+.av-pink{background:linear-gradient(135deg,#8a1050,#e84f8c);}
+.av-coral{background:linear-gradient(135deg,#8a3010,#f07a3a);}
+.av-gold{background:linear-gradient(135deg,#8a6600,#f5c842);}
+.av-purple{background:linear-gradient(135deg,#3a1a60,#7b5ea7);}
+.contact-name{font-size:14px;font-weight:600;color:var(--text1);}
+.contact-role{font-size:12px;color:var(--text2);margin-top:2px;}
+.contact-info{font-size:12px;margin-top:5px;display:flex;align-items:center;gap:5px;}
+.contact-info i{font-size:13px;}
+.ci-sky{color:var(--sky);}.ci-teal{color:var(--teal);}.ci-gold{color:var(--gold);}.ci-coral{color:var(--coral);}
+.vision-block{background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--teal);border-radius:var(--radius-sm);padding:14px 15px;margin:10px 0;}
+.vision-block p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:8px;}
+.vision-block p:last-child{margin-bottom:0;}
+.vision-block strong{color:var(--text1);}
+.warn-box{background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.25);border-radius:var(--radius-sm);padding:11px 13px;display:flex;gap:10px;align-items:flex-start;margin:10px 0;}
+.warn-box i{color:var(--gold);font-size:16px;flex-shrink:0;margin-top:1px;}
+.warn-box p{font-size:12.5px;color:var(--text2);line-height:1.55;}
+.phase-step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);}
+.phase-step:last-child{border-bottom:none;}
+.phase-dot{width:28px;height:28px;border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;}
+.pd0{background:var(--sky);}.pd1{background:var(--teal);}.pd2{background:var(--pink);}.pd3{background:var(--coral);}
+.phase-title{font-size:13px;font-weight:600;color:var(--text1);}
+.phase-desc{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.55;}
+.page-title{font-family:var(--font-display);font-size:22px;color:var(--text1);margin-bottom:16px;line-height:1.2;}
+#searchOverlay{display:none;position:absolute;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:100;flex-direction:column;padding:14px;animation:fadeIn 0.15s ease;}
+#searchOverlay.active{display:flex;}
+.search-bar{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:16px;}
+#searchInput{flex:1;background:none;border:none;outline:none;font-family:var(--font-body);font-size:15px;color:var(--text1);}
+#searchInput::placeholder{color:var(--text3);}
+.search-cancel{font-size:14px;color:var(--sky);cursor:pointer;padding:4px;white-space:nowrap;font-weight:500;}
+#searchResults{flex:1;overflow-y:auto;}
+#searchResults::-webkit-scrollbar{display:none;}
+.search-result{background:var(--surface);border:1px solid var(--border);border-left:3px solid transparent;border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;cursor:pointer;}
+.search-result:active{background:var(--surface2);}
+.sr-team{border-left-color:var(--pink);}.sr-dag{border-left-color:var(--teal);}.sr-regels{border-left-color:var(--gold);}.sr-contact{border-left-color:var(--coral);}
+.sr-section{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;}
+.sr-title{font-size:13.5px;font-weight:600;color:var(--text1);}
+.sr-snippet{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.sr-empty{text-align:center;color:var(--text3);font-size:13px;padding:40px 20px;}
+.loading{display:flex;align-items:center;justify-content:center;height:200px;color:var(--text3);font-size:14px;gap:10px;}
+.loading i{font-size:24px;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<div class="app-header">
+  <div class="header-left">
+    <div class="header-logo"><img src="icon-512.png" alt="logo"></div>
+    <div>
+      <div class="header-title">IVB High Care</div>
+      <div class="header-sub">Informatiegids</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div class="icon-btn" id="searchBtn"><span class="btn-icon">🔍</span></div>
+    <div class="icon-btn" id="themeBtn"><span class="btn-icon" id="themeIcon">🌙</span></div>
+  </div>
+</div>
+
+<div id="searchOverlay">
+  <div class="search-bar">
+    <span style="font-size:18px;flex-shrink:0">🔍</span>
+    <input type="text" id="searchInput" placeholder="Zoek in de gids..." autocomplete="off">
+    <span class="search-cancel" id="searchCancel">Annuleer</span>
+  </div>
+  <div id="searchResults"></div>
+</div>
+
+<div class="content-area" id="contentArea">
+  <div class="panel active" id="panel-home"><div class="loading"><i class="ti ti-loader"></i> Laden...</div></div>
+  <div class="panel" id="panel-team"><div class="loading"><i class="ti ti-loader"></i> Laden...</div></div>
+  <div class="panel" id="panel-dag"><div class="loading"><i class="ti ti-loader"></i> Laden...</div></div>
+  <div class="panel" id="panel-regels"><div class="loading"><i class="ti ti-loader"></i> Laden...</div></div>
+  <div class="panel" id="panel-contact"><div class="loading"><i class="ti ti-loader"></i> Laden...</div></div>
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item active" id="nav-home" onclick="goTo('home')"><i class="ti ti-home"></i><span>Home</span></div>
+  <div class="nav-item" id="nav-team" onclick="goTo('team')"><i class="ti ti-users"></i><span>Team</span></div>
+  <div class="nav-item" id="nav-dag" onclick="goTo('dag')"><i class="ti ti-calendar"></i><span>Programma</span></div>
+  <div class="nav-item" id="nav-regels" onclick="goTo('regels')"><i class="ti ti-clipboard-list"></i><span>Regels</span></div>
+  <div class="nav-item" id="nav-contact" onclick="goTo('contact')"><i class="ti ti-phone"></i><span>Contact</span></div>
+</div>
+</div>
+
+<script>
+/* ── THEME ─────────────────────────────────────────────────── */
+let isDark = localStorage.getItem('ivb-theme') !== 'light';
+function applyTheme() {
+  if (isDark) { document.documentElement.removeAttribute('data-theme'); document.getElementById('themeIcon').textContent = '🌙'; document.getElementById('themeMetaColor').content = '#0f1117'; }
+  else { document.documentElement.setAttribute('data-theme','light'); document.getElementById('themeIcon').textContent = '☀️'; document.getElementById('themeMetaColor').content = '#f2f4f9'; }
+  localStorage.setItem('ivb-theme', isDark ? 'dark' : 'light');
+}
+applyTheme();
+document.getElementById('themeBtn').addEventListener('click', () => { isDark = !isDark; applyTheme(); });
+
+/* ── NAV ───────────────────────────────────────────────────── */
+function goTo(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+  document.getElementById('contentArea').scrollTop = 0;
+}
+
+/* ── ACCORDION ─────────────────────────────────────────────── */
+function toggleAcc(card) {
+  const isOpen = card.classList.contains('open');
+  card.closest('.panel').querySelectorAll('.acc-card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+
+/* ── HELPERS ───────────────────────────────────────────────── */
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function bodyToHTML(text) {
+  if (!text) return '';
+  return text.split('\n\n').map(p => p.trim()).filter(Boolean)
+    .map(p => `<p>${esc(p).replace(/\n/g,'<br>')}</p>`).join('');
+}
+
+function scheduleHTML(schedule) {
+  if (!schedule || !schedule.length) return '';
+  return schedule.map(block => `
+    <div class="schedule-block">
+      <div class="schedule-day">${esc(block.day)}</div>
+      ${(block.rows||[]).map(r => `<div class="schedule-row"><span class="s-time">${esc(r.time)}</span><span class="s-act">${esc(r.activity||'')}</span></div>`).join('')}
+    </div>`).join('');
+}
+
+function accCard(card, bodyInner) {
+  return `
+  <div class="acc-card" onclick="toggleAcc(this)">
+    <div class="acc-header">
+      <div class="acc-icon ${esc(card.color)}"><i class="ti ${esc(card.icon)}"></i></div>
+      <div class="acc-meta"><div class="acc-title">${esc(card.title)}</div><div class="acc-sub">${esc(card.subtitle)}</div></div>
+      <i class="ti ti-chevron-down acc-chevron"></i>
+    </div>
+    <div class="acc-body"><div class="acc-body-inner">${bodyInner}</div></div>
+  </div>`;
+}
+
+/* ── RENDER HOME ───────────────────────────────────────────── */
+function renderHome(d) {
+  document.getElementById('panel-home').innerHTML = `
+    <div class="home-hero">
+      <div class="hero-icon"><i class="ti ti-heart-handshake"></i></div>
+      <div class="hero-title">${esc(d.hero_title)}</div>
+      <div class="hero-ward">${esc(d.hero_ward)}</div>
+      <div class="hero-body">${esc(d.hero_body)}</div>
+    </div>
+    <div class="notice"><i class="ti ti-info-circle"></i><p><strong>Vragen?</strong> ${esc(d.notice_text)}</p></div>
+    <div class="section-label">Snel naar</div>
+    <div class="quick-grid">
+      <div class="quick-tile qt-team" onclick="goTo('team')"><i class="ti ti-users qt-icon"></i><div class="qt-label">Behandelteam</div><div class="qt-sub">Uw behandelaars</div></div>
+      <div class="quick-tile qt-dag" onclick="goTo('dag')"><i class="ti ti-calendar-time qt-icon"></i><div class="qt-label">Dagprogramma</div><div class="qt-sub">Activiteiten &amp; sport</div></div>
+      <div class="quick-tile qt-regels" onclick="goTo('regels')"><i class="ti ti-clipboard-list qt-icon"></i><div class="qt-label">Regels &amp; Visie</div><div class="qt-sub">Huisregels afdeling</div></div>
+      <div class="quick-tile qt-contact" onclick="goTo('contact')"><i class="ti ti-phone qt-icon"></i><div class="qt-label">Contact</div><div class="qt-sub">Nummers &amp; tijden</div></div>
+    </div>
+    <div class="section-label">Informatiemap</div>
+    ${accCard({color:'ic-sky',icon:'ti-folder-open',title:'Wat vindt u in deze gids?',subtitle:'Overzicht van alle onderwerpen'},
+      `<p>${esc(d.infomap_body)}</p>
+       <div class="tag-row"><span class="tag tag-pink"><i class="ti ti-users"></i> Team</span><span class="tag tag-teal"><i class="ti ti-calendar"></i> Programma</span><span class="tag tag-gold"><i class="ti ti-clipboard-list"></i> Regels</span><span class="tag tag-coral"><i class="ti ti-phone"></i> Contact</span></div>`
+    )}`;
+}
+
+/* ── RENDER TEAM ───────────────────────────────────────────── */
+function renderTeam(d) {
+  document.getElementById('panel-team').innerHTML =
+    `<div class="page-title">Behandelteam</div>` +
+    d.cards.map(card => accCard(card, bodyToHTML(card.body))).join('');
+}
+
+/* ── RENDER PROGRAMMA ──────────────────────────────────────── */
+function renderProgramma(d) {
+  document.getElementById('panel-dag').innerHTML =
+    `<div class="page-title">Dagprogramma</div>` +
+    d.cards.map(card => {
+      let inner = bodyToHTML(card.body);
+      if (card.modules_list && card.modules_list.length) {
+        inner += `<div class="tag-row">${card.modules_list.map(m => `<span class="tag tag-teal">${esc(m)}</span>`).join('')}</div>`;
+      }
+      inner += scheduleHTML(card.schedule);
+      return accCard(card, inner);
+    }).join('');
+}
+
+/* ── RENDER REGELS ─────────────────────────────────────────── */
+function renderRegels(d) {
+  document.getElementById('panel-regels').innerHTML =
+    `<div class="page-title">Regels &amp; Visie</div>` +
+    d.cards.map(card => {
+      let inner = bodyToHTML(card.body);
+      if (card.phases && card.phases.length) {
+        inner += `<div class="vision-block">${card.body ? '' : ''}</div>`;
+        // rebuild as vision + phases
+        const vparts = card.body ? card.body.split('\n\n').map(p => `<p>${esc(p.trim())}</p>`).join('') : '';
+        inner = `<div class="vision-block">${vparts}</div><h4>Behandelfases</h4>` +
+          card.phases.map((ph,i) => `<div class="phase-step"><div class="phase-dot pd${i}">${i+1}</div><div><div class="phase-title">${esc(ph.title)}</div><div class="phase-desc">${esc(ph.desc)}</div></div></div>`).join('');
+      }
+      if (card.tijden && card.tijden.length) {
+        const iconMap = {
+          'Ontbijt':'ti-sun','Lunch':'ti-sun-2','Avondeten':'ti-moon',
+          'TV':'ti-device-tv','Stilte':'ti-zzz','Rook':'ti-smoking','Nacht':'ti-bulb-off'
+        };
+        const getIcon = label => { for (const k in iconMap) if (label.toLowerCase().includes(k.toLowerCase())) return iconMap[k]; return 'ti-clock'; };
+        inner += card.tijden.map(t => `<div class="info-row"><i class="ti ${getIcon(t.label)} ir-icon" style="color:var(--teal)"></i><span class="ir-label">${esc(t.label)}</span><span class="ir-value">${esc(t.tijd)}</span></div>`).join('');
+      }
+      if (card.rules && card.rules.length) {
+        inner += `<div class="rule-list">${card.rules.map(r => `<div class="rule-item"><div class="rule-x">✕</div><div class="rule-text">${esc(r)}</div></div>`).join('')}</div>`;
+      }
+      if (card.warning) {
+        inner += `<div class="warn-box"><i class="ti ti-alert-triangle"></i><p><strong>Let op:</strong> ${esc(card.warning)}</p></div>`;
+      }
+      return accCard(card, inner);
+    }).join('');
+}
+
+/* ── RENDER CONTACT ────────────────────────────────────────── */
+function renderContact(d) {
+  const persons = d.persons.map(p => `
+    <div class="contact-card">
+      <div class="avatar ${esc(p.avatar_color)}">${esc(p.initials)}</div>
+      <div>
+        <div class="contact-name">${esc(p.name)}</div>
+        <div class="contact-role">${esc(p.role)}</div>
+        <div class="contact-info ${esc(p.info_color)}"><i class="ti ti-phone"></i>${esc(p.info)}</div>
+      </div>
+    </div>`).join('');
+
+  const tijden = d.tijden.map(t => `
+    <div class="info-row">
+      <i class="ti ti-clock ir-icon" style="color:var(--teal)"></i>
+      <span class="ir-label">${esc(t.label)}</span>
+      <span class="ir-value">${esc(t.tijd)}</span>
+    </div>`).join('');
+
+  document.getElementById('panel-contact').innerHTML = `
+    <div class="page-title">Contact</div>
+    <div class="section-label">Contactpersonen</div>
+    ${persons}
+    <div class="section-label" style="margin-top:16px">Tijden</div>
+    <div class="acc-card" onclick="toggleAcc(this)">
+      <div class="acc-header"><div class="acc-icon ic-coral"><i class="ti ti-clock-2"></i></div><div class="acc-meta"><div class="acc-title">Openingstijden &amp; Bezoek</div><div class="acc-sub">Alle tijden op een rij</div></div><i class="ti ti-chevron-down acc-chevron"></i></div>
+      <div class="acc-body"><div class="acc-body-inner">${tijden}<p style="margin-top:10px">${esc(d.tijden_note)}</p></div></div>
+    </div>`;
+}
+
+/* ── SEARCH ────────────────────────────────────────────────── */
+let searchIndex = [];
+function buildSearchIndex(home, team, prog, regels, contact) {
+  searchIndex = [];
+  team.cards.forEach(c => searchIndex.push({tab:'team',cls:'sr-team',section:'Team',title:c.title,snippet:c.subtitle+'. '+c.body.substring(0,80)}));
+  prog.cards.forEach(c => searchIndex.push({tab:'dag',cls:'sr-dag',section:'Programma',title:c.title,snippet:c.subtitle+'. '+c.body.substring(0,80)}));
+  regels.cards.forEach(c => searchIndex.push({tab:'regels',cls:'sr-regels',section:'Regels',title:c.title,snippet:c.subtitle+'. '+c.body.substring(0,80)}));
+  contact.persons.forEach(p => searchIndex.push({tab:'contact',cls:'sr-contact',section:'Contact',title:p.name,snippet:p.role+'. '+p.info}));
+}
+
+const overlay = document.getElementById('searchOverlay');
+const input = document.getElementById('searchInput');
+const results = document.getElementById('searchResults');
+document.getElementById('searchBtn').addEventListener('click', () => { overlay.classList.add('active'); input.focus(); renderSearch(''); });
+document.getElementById('searchCancel').addEventListener('click', closeSearch);
+function closeSearch() { overlay.classList.remove('active'); input.value = ''; results.innerHTML = ''; }
+input.addEventListener('input', function() { renderSearch(this.value.trim().toLowerCase()); });
+function sectionColor(cls) { return {sr_team:'var(--pink)',sr_dag:'var(--teal)',sr_regels:'var(--gold)',sr_contact:'var(--coral)'}[cls.replace('-','_')]||'var(--sky)'; }
+function renderSearch(q) {
+  if (!q) { results.innerHTML = '<div class="sr-empty">Typ om te zoeken…</div>'; return; }
+  const hits = searchIndex.filter(d => d.title.toLowerCase().includes(q) || d.snippet.toLowerCase().includes(q) || d.section.toLowerCase().includes(q));
+  if (!hits.length) { results.innerHTML = '<div class="sr-empty">Geen resultaten gevonden.</div>'; return; }
+  results.innerHTML = hits.map(h => `<div class="search-result ${h.cls}" onclick="goTo('${h.tab}');closeSearch()"><div class="sr-section" style="color:${sectionColor(h.cls)}">${h.section}</div><div class="sr-title">${h.title}</div><div class="sr-snippet">${h.snippet.substring(0,100)}…</div></div>`).join('');
+}
+
+/* ── LOAD ALL CONTENT ──────────────────────────────────────── */
+async function loadAll() {
+  try {
+    const [home, team, prog, regels, contact] = await Promise.all([
+      fetch('content/home.json').then(r => r.json()),
+      fetch('content/team.json').then(r => r.json()),
+      fetch('content/programma.json').then(r => r.json()),
+      fetch('content/regels.json').then(r => r.json()),
+      fetch('content/contact.json').then(r => r.json()),
+    ]);
+    renderHome(home);
+    renderTeam(team);
+    renderProgramma(prog);
+    renderRegels(regels);
+    renderContact(contact);
+    buildSearchIndex(home, team, prog, regels, contact);
+  } catch(e) {
+    console.error('Content load error:', e);
+  }
+}
+loadAll();
+
+/* ── PWA ───────────────────────────────────────────────────── */
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js').catch(() => {}); }
+
+/* ── NETLIFY IDENTITY REDIRECT ─────────────────────────────── */
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', user => {
+    if (!user) { window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; }); }
+  });
+}
+</script>
+</body>
+</html>

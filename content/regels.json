@@ -1,0 +1,124 @@
+{
+  "cards": [
+    {
+      "id": "visie",
+      "icon": "ti-eye",
+      "color": "ic-teal",
+      "title": "Afdelingsvisie — ART",
+      "subtitle": "Active Recovery Triad",
+      "body": "Op IVB High Care werken we volgens de ART: Active Recovery Triad methodiek. De kernaspecten zijn: relationeel, risico's nemen, leren en betrokkenheid in de samenleving.\n\nHet is de kunst om te worden wie je bent — met onophoudelijk vertrouwen. Gewoon doen en gewoon praten. Echt onbevooroordeeld luisteren en nabij zijn.",
+      "phases": [
+        { "title": "Eerste week van opname", "desc": "Intakegesprek, lichamelijk onderzoek, labafname. Bekijken wat nodig is om de diagnostiekfase in te gaan." },
+        { "title": "Diagnostiekfase", "desc": "Onderzoeken en lijsten afnemen, observatiedoelen opstellen, afstemmen met uw netwerk." },
+        { "title": "Behandelfase", "desc": "Op basis van alle bevindingen krijgt u een persoonlijk behandelplan." },
+        { "title": "Uitstroomfase", "desc": "Voorbereiding op uw vervolgplek. Bij stagnatie treedt de diagnostiekfase opnieuw op." }
+      ]
+    },
+    {
+      "id": "eten",
+      "icon": "ti-coffee",
+      "color": "ic-gold",
+      "title": "Eettijden & keuken",
+      "subtitle": "Ontbijt, lunch en avondeten",
+      "body": "",
+      "tijden": [
+        { "label": "Ontbijt (inloop)", "tijd": "08:00 – 09:00" },
+        { "label": "Lunch", "tijd": "Vanaf 12:15" },
+        { "label": "Avondeten", "tijd": "Vanaf 17:15" },
+        { "label": "Keuken ontbijt", "tijd": "08:00 – 09:00" },
+        { "label": "Keuken lunch", "tijd": "12:00 – 13:00" },
+        { "label": "Keuken avond", "tijd": "17:00 – 18:00" },
+        { "label": "Keuken nacht", "tijd": "20:00 – 21:00" }
+      ]
+    },
+    {
+      "id": "slaap",
+      "icon": "ti-moon",
+      "color": "ic-navy",
+      "title": "Slaap- en rusttijden",
+      "subtitle": "Nachtelijke stilte",
+      "body": "",
+      "tijden": [
+        { "label": "Stilte op afdeling", "tijd": "23:00 – 07:00" },
+        { "label": "Rookmoment nacht", "tijd": "1 moment tussen 23:00 – 07:00" },
+        { "label": "Nachtstand", "tijd": "Vanaf 22:00 (douches & eetkamer dicht)" },
+        { "label": "TV vr & za", "tijd": "Tot 00:00" },
+        { "label": "TV zo t/m do", "tijd": "Tot 23:00" }
+      ]
+    },
+    {
+      "id": "telefoon",
+      "icon": "ti-device-mobile",
+      "color": "ic-sky",
+      "title": "Telefoon, PC & internet",
+      "subtitle": "Gebruik van apparaten",
+      "body": "Eigen telefoon: gebruik op uw slaapkamer vanwege privacy van anderen. Voor de afdelingstelefoon vraagt u bij de verpleging een buitenlijn aan.\n\nPC: de afdeling beschikt over 1 pc met internet in de eetkamer. Een eigen laptop gebruikt u bij voorkeur op uw eigen kamer."
+    },
+    {
+      "id": "verboden",
+      "icon": "ti-ban",
+      "color": "ic-red",
+      "title": "Niet toegestaan op kamer",
+      "subtitle": "Verboden spullen",
+      "body": "Kleding & schoenen: alleen wat past in de kledingkast.",
+      "rules": [
+        "Asbak, kaarsen, wierrook of brandbare stoffen",
+        "Huishoudelijke apparatuur: waterkoker, kookplaat, televisie",
+        "Verlengsnoeren (alleen onder toezicht); lichtsnoeren (uitzondering: led-lichtjes)",
+        "Slag-, steek- en vuurwapens; scherpe messen",
+        "Reinigingsmiddelen met alcohol (bijv. mondwater)",
+        "Alcohol, energiedrank, drugs en gebruiksvoorwerpen van drugs",
+        "Medicatie (beheer via verpleging)"
+      ]
+    },
+    {
+      "id": "roken",
+      "icon": "ti-smoking",
+      "color": "ic-coral",
+      "title": "Roken",
+      "subtitle": "Alleen op aangewezen plekken buiten",
+      "body": "Roken is alleen toegestaan op daarvoor bestemde plekken op het terrein. Roken op de slaapkamer is niet toegestaan.",
+      "warning": "Bij roken op de slaapkamer wordt de tabak voor 24 uur ingenomen. Bij herhaling kan dit worden uitgebreid."
+    },
+    {
+      "id": "alcohol",
+      "icon": "ti-bottle",
+      "color": "ic-purple",
+      "title": "Alcohol, drugs & energiedrank",
+      "subtitle": "Strikt verbod",
+      "body": "Gebruik van en handelen in alcohol en/of drugs is niet toegestaan — ook niet voor uw bezoek. Dit geldt ook voor bier met 0% alcohol en energiedrank.\n\nU en uw bezoek kunnen worden verzocht mee te werken aan een tassen-, kleding- en kamercontrole. Bij harddrugs wordt dit overgedragen aan de politie."
+    },
+    {
+      "id": "schoonmaken",
+      "icon": "ti-tools",
+      "color": "ic-peach",
+      "title": "Schoonmaken & wasgoed",
+      "subtitle": "Corvee en huishoudelijkheid",
+      "body": "De huishoudelijke dienst verzorgt sanitaire ruimtes, keuken en gemeenschappelijke ruimtes. Uw eigen kamer ruimt u zelf op.\n\nElke zaterdagochtend wordt gezamenlijk gekeken welke hulp nodig is. U wordt verzocht lichte werkzaamheden mee te verrichten (tafel dekken, afruimen, koffie zetten).\n\nWasgoed: beddengoed van de instelling deponeert u in de waskar met gele zak. Persoonlijk wasgoed wast u zelf of via familie."
+    },
+    {
+      "id": "beeld",
+      "icon": "ti-camera-off",
+      "color": "ic-red",
+      "title": "Beeld- en geluidsopname",
+      "subtitle": "Privacy van medepatiënten",
+      "body": "Cliënten mogen elkaar of zichzelf op de afdeling niet filmen of fotograferen vanwege privacy.\n\nFoto's en filmpjes mogen niet online worden gepubliceerd op sociale media. Publicatie is uitsluitend met uitdrukkelijke toestemming van betrokkene(n)."
+    },
+    {
+      "id": "pvp",
+      "icon": "ti-shield-check",
+      "color": "ic-teal",
+      "title": "Patiëntenvertrouwenspersoon (PVP)",
+      "subtitle": "Onafhankelijk en vertrouwelijk",
+      "body": "Heeft u vragen of klachten waar u niet uitkomt met uw behandelaar? Dan kunt u terecht bij de PVP.\n\nDe PVP is op de hoogte van uw rechten en plichten in de geestelijke gezondheidszorg, behartigt uw belangen en werkt volledig onafhankelijk van de kliniek."
+    },
+    {
+      "id": "zag",
+      "icon": "ti-list-check",
+      "color": "ic-navy",
+      "title": "ZAG-Werkwijze",
+      "subtitle": "Bijlage 1 — Zorgafstemmingsgesprek",
+      "body": "Het ZAG vindt met regelmaat plaats gedurende uw opname. Naast uzelf mag een naaste aanwezig zijn, evenals andere betrokkenen zoals een behandelaar van een ambulant team.\n\nU bespreekt samen met de psychiater of behandelcoördinator en een begeleider het verdere verloop van uw behandeling."
+    }
+  ]
+}
