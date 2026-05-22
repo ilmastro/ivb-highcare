@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IVB High Care — Beheer CMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+/* ── TOKENS ──────────────────────────────────────────────── */
+:root {
+  --bg: #f4f5f7;
+  --bg2: #ffffff;
+  --sidebar-bg: #ffffff;
+  --surface: #f9fafb;
+  --surface2: #f0f2f5;
+  --border: #e5e8ed;
+  --border2: #d1d5dc;
+  --text1: #111827;
+  --text2: #4b5563;
+  --text3: #9ca3af;
+  --accent: #2563eb;
+  --accent-bg: rgba(37,99,235,0.08);
+  --accent-fg: #1d4ed8;
+  --teal: #0d9488;
+  --pink: #db2777;
+  --gold: #d97706;
+  --coral: #ea580c;
+  --purple: #7c3aed;
+  --sky: #0284c7;
+  --navy: #1e3a8a;
+  --green: #059669;
+  --red: #dc2626;
+  --success: #16a34a;
+  --success-bg: rgba(22,163,74,0.1);
+  --warn: #d97706;
+  --warn-bg: rgba(217,119,6,0.1);
+  --sidebar-w: 220px;
+  --header-h: 52px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --tr: 0.18s ease;
+  --font: 'DM Sans', sans-serif;
+  --font-display: 'Fraunces', serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg2: #161b26;
+  --sidebar-bg: #13181f;
+  --surface: #1c2235;
+  --surface2: #232840;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.14);
+  --text1: #eef1f8;
+  --text2: #8b95b0;
+  --text3: #4a5270;
+  --accent: #4ab8e8;
+  --accent-bg: rgba(74,184,232,0.1);
+  --accent-fg: #7dd3f8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text1);
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--tr), color var(--tr);
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────── */
+#app { display: flex; height: 100vh; overflow: hidden; }
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background var(--tr);
+}
+
+.sidebar-logo {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, var(--teal), var(--sky));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-mark i { font-size: 16px; color: #fff; }
+.logo-name { font-size: 12px; font-weight: 600; color: var(--text1); line-height: 1.2; }
+.logo-sub { font-size: 10px; color: var(--teal); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 16px 14px 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  margin: 1px 8px;
+  transition: all var(--tr);
+  user-select: none;
+  position: relative;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text1); }
+.nav-item.active { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+.nav-item i { font-size: 17px; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--surface2);
+  color: var(--text3);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+}
+.nav-item.active .nav-badge { background: var(--accent-bg); color: var(--accent); }
+
+.sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 10px 8px;
+}
+
+/* ── MAIN ────────────────────────────────────────────────── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── TOP BAR ─────────────────────────────────────────────── */
+.topbar {
+  height: var(--header-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+  flex-shrink: 0;
+  transition: background var(--tr);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text2);
+  flex: 1;
+}
+.breadcrumb span { color: var(--text3); font-size: 15px; }
+.breadcrumb strong { color: var(--text1); font-weight: 600; }
+
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--success-bg);
+  color: var(--success);
+  transition: all 0.3s;
+}
+.status-pill.saving { background: var(--warn-bg); color: var(--warn); }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.status-pill.saving .status-dot { animation: pulse 0.8s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+
+.topbar-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--text1);
+  transition: all var(--tr);
+}
+.topbar-btn:hover { background: var(--surface2); }
+.topbar-btn.primary {
+  background: var(--text1);
+  color: var(--bg2);
+  border-color: var(--text1);
+}
+.topbar-btn.primary:hover { opacity: 0.88; }
+.topbar-btn i { font-size: 15px; }
+
+.icon-btn2 {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 17px;
+  color: var(--text2);
+  transition: all var(--tr);
+}
+.icon-btn2:hover { background: var(--surface2); color: var(--text1); }
+
+/* ── CONTENT WORKSPACE ───────────────────────────────────── */
+.workspace {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── EDITOR AREA ─────────────────────────────────────────── */
+.editor-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+  background: var(--bg);
+}
+.editor-area::-webkit-scrollbar { width: 5px; }
+.editor-area::-webkit-scrollbar-track { background: transparent; }
+.editor-area::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ── PAGE HEADER ─────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.page-type-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.page-title-big {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text1);
+  line-height: 1.2;
+}
+.page-meta { font-size: 12px; color: var(--text3); margin-top: 3px; font-family: var(--font-mono); }
+
+.page-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ── DASHBOARD GRID ──────────────────────────────────────── */
+.content-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.content-type-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all var(--tr);
+  position: relative;
+  overflow: hidden;
+}
+.content-type-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  opacity: 0.1;
+  transform: translate(20px, -20px);
+}
+.content-type-card:hover { border-color: var(--border2); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.ct-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.ct-name { font-size: 15px; font-weight: 600; color: var(--text1); }
+.ct-desc { font-size: 12px; color: var(--text2); margin-top: 3px; }
+.ct-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+}
+.ct-count { color: var(--text3); font-family: var(--font-mono); }
+.ct-edit { color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+/* ── SECTION EDITOR ──────────────────────────────────────── */
+.section-group {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color var(--tr);
+}
+.section-group:focus-within { border-color: var(--accent); }
+
+.section-group-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.section-group-header:hover { background: var(--surface); }
+.sg-icon { font-size: 18px; color: var(--accent); }
+.sg-title { font-size: 14px; font-weight: 600; color: var(--text1); }
+.sg-desc { font-size: 12px; color: var(--text3); margin-left: auto; }
+.sg-badge { font-size: 11px; font-weight: 600; color: var(--text3); font-family: var(--font-mono); background: var(--surface2); padding: 2px 7px; border-radius: 10px; }
+.sg-toggle { font-size: 16px; color: var(--text3); transition: transform 0.2s; margin-left: 8px; }
+.sg-toggle.open { transform: rotate(180deg); }
+
+.section-group-body { padding: 18px; }
+
+/* ── FIELD ───────────────────────────────────────────────── */
+.field { margin-bottom: 18px; }
+.field:last-child { margin-bottom: 0; }
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.char-count { font-family: var(--font-mono); font-size: 11px; color: var(--text3); letter-spacing: 0; text-transform: none; font-weight: 400; }
+.field-hint { font-size: 11.5px; color: var(--text3); margin-top: 4px; }
+
+.input, .textarea, .select {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-family: var(--font);
+  font-size: 13.5px;
+  color: var(--text1);
+  transition: border-color var(--tr), box-shadow var(--tr);
+  outline: none;
+}
+.input:focus, .textarea:focus, .select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+.textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+.select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+
+/* ── CARD LIST ───────────────────────────────────────────── */
+.card-list { display: flex; flex-direction: column; gap: 10px; }
+
+.card-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all var(--tr);
+}
+.card-item:focus-within { border-color: var(--border2); }
+
+.card-item-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-item-header:hover { background: var(--surface2); }
+
+.card-color-dot {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.card-item-title { font-size: 13.5px; font-weight: 600; color: var(--text1); }
+.card-item-sub { font-size: 11.5px; color: var(--text2); margin-top: 1px; }
+.card-item-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity var(--tr);
+}
+.card-item-header:hover .card-item-actions { opacity: 1; }
+.ci-btn {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text2);
+  transition: all var(--tr);
+}
+.ci-btn:hover { background: var(--border); }
+.ci-btn.del:hover { background: rgba(220,38,38,0.1); color: var(--red); }
+.ci-chevron { font-size: 15px; color: var(--text3); transition: transform 0.2s; }
+.card-item.open .ci-chevron { transform: rotate(180deg); }
+
+.card-item-body {
+  border-top: 1px solid var(--border);
+  padding: 16px;
+  display: none;
+  background: var(--bg2);
+}
+.card-item.open .card-item-body { display: block; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* ── ADD CARD BTN ────────────────────────────────────────── */
+.add-card-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px;
+  border: 2px dashed var(--border2);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all var(--tr);
+  margin-top: 10px;
+}
+.add-card-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+
+/* ── SUB-LIST (tijden, rules, phases) ────────────────────── */
+.sub-list { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
+.sub-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+.sub-item .input { background: transparent; border: none; box-shadow: none; padding: 0; font-size: 13px; }
+.sub-item .input:focus { border: none; box-shadow: none; }
+.sub-del { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 5px; cursor: pointer; font-size: 13px; color: var(--text3); flex-shrink: 0; transition: all var(--tr); }
+.sub-del:hover { background: rgba(220,38,38,0.1); color: var(--red); }
+.add-sub-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 600; color: var(--accent);
+  cursor: pointer; padding: 5px 0; margin-top: 4px;
+  transition: opacity var(--tr);
+}
+.add-sub-btn:hover { opacity: 0.75; }
+
+/* ── PREVIEW PANE ────────────────────────────────────────── */
+.preview-pane {
+  width: 290px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.preview-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--bg2);
+}
+.preview-header i { font-size: 15px; color: var(--accent); }
+.preview-tabs { display: flex; gap: 4px; margin-left: auto; }
+.ptab {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text3);
+  transition: all var(--tr);
+}
+.ptab.active { background: var(--accent-bg); color: var(--accent); }
+
+.preview-body { flex: 1; overflow-y: auto; padding: 16px; }
+.preview-body::-webkit-scrollbar { display: none; }
+
+.phone-frame {
+  background: #111;
+  border-radius: 36px;
+  padding: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  max-width: 240px;
+  margin: 0 auto;
+}
+.phone-screen {
+  background: #0f1117;
+  border-radius: 30px;
+  overflow: hidden;
+  min-height: 420px;
+  font-family: var(--font);
+  font-size: 11px;
+  position: relative;
+}
+
+/* phone inner styles */
+.ph-header { background: #161b26; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; gap: 7px; }
+.ph-logo { width: 22px; height: 22px; background: linear-gradient(135deg,#1a8080,#3dbfbf); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; }
+.ph-name { font-size: 10px; font-weight: 700; color: #eef1f8; }
+.ph-sub { font-size: 8px; color: #3dbfbf; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.ph-icons { margin-left: auto; display: flex; gap: 5px; }
+.ph-ic { width: 22px; height: 22px; background: #1c2235; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #8b95b0; }
+
+.ph-content { padding: 10px; }
+.ph-hero { background: #161b26; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+.ph-hero-icon { font-size: 18px; color: #e84f8c; margin-bottom: 5px; }
+.ph-hero-title { font-family: var(--font-display); font-size: 13px; color: #eef1f8; line-height: 1.3; margin-bottom: 2px; }
+.ph-hero-ward { font-size: 7px; color: #3dbfbf; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; margin-bottom: 5px; }
+.ph-hero-body { font-size: 8.5px; color: #8b95b0; line-height: 1.6; }
+.ph-notice { background: rgba(74,184,232,0.08); border: 1px solid rgba(74,184,232,0.2); border-radius: 6px; padding: 7px 8px; display: flex; gap: 5px; margin-bottom: 8px; }
+.ph-notice i { font-size: 10px; color: #4ab8e8; flex-shrink: 0; margin-top: 1px; }
+.ph-notice p { font-size: 8px; color: #8b95b0; line-height: 1.5; }
+.ph-notice strong { color: #eef1f8; }
+.ph-label { font-size: 7.5px; color: #4a5270; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; margin-bottom: 6px; }
+.ph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ph-tile { background: #1c2235; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 9px 8px; }
+.ph-tile-icon { font-size: 13px; margin-bottom: 4px; }
+.ph-tile-label { font-size: 8.5px; font-weight: 700; color: #eef1f8; }
+.ph-tile-sub { font-size: 7px; color: #8b95b0; margin-top: 1px; }
+
+.ph-nav { background: #161b26; border-top: 1px solid rgba(255,255,255,0.07); display: flex; padding: 6px 0 8px; }
+.ph-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 7px; color: #4a5270; }
+.ph-nav-item i { font-size: 13px; }
+.ph-nav-item.active { color: #4ab8e8; }
+
+/* ── TOAST ───────────────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 20px; right: 20px;
+  background: var(--text1); color: var(--bg2);
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: var(--shadow-md);
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ── MODAL ───────────────────────────────────────────────── */
+.modal-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-backdrop.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: var(--shadow-md);
+}
+.modal-title { font-family: var(--font-display); font-size: 20px; margin-bottom: 6px; }
+.modal-body { font-size: 13px; color: var(--text2); margin-bottom: 20px; line-height: 1.6; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.btn-danger { background: var(--red); color: #fff; border: none; padding: 8px 18px; border-radius: var(--radius-sm); font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity var(--tr); }
+.btn-danger:hover { opacity: 0.85; }
+.btn-cancel { background: var(--surface); border: 1px solid var(--border2); padding: 8px 18px; border-radius: var(--radius-sm); font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text1); transition: all var(--tr); }
+.btn-cancel:hover { background: var(--surface2); }
+
+/* ── SEARCH BAR IN SIDEBAR ───────────────────────────────── */
+.sidebar-search {
+  margin: 10px 10px 4px;
+  display: flex; align-items: center; gap: 7px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+}
+.sidebar-search i { font-size: 14px; color: var(--text3); }
+.sidebar-search input { flex: 1; background: none; border: none; outline: none; font-family: var(--font); font-size: 12.5px; color: var(--text1); }
+.sidebar-search input::placeholder { color: var(--text3); }
+
+/* ── HISTORY PILL ────────────────────────────────────────── */
+.history-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text2);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all var(--tr);
+}
+.history-chip:hover { background: var(--surface2); }
+
+/* ── DASHBOARD INFO BOX ──────────────────────────────────── */
+.info-banner {
+  background: var(--accent-bg);
+  border: 1px solid rgba(37,99,235,0.2);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--text2);
+}
+[data-theme="dark"] .info-banner { border-color: rgba(74,184,232,0.2); }
+.info-banner i { font-size: 18px; color: var(--accent); flex-shrink: 0; }
+.info-banner strong { color: var(--text1); }
+
+/* ── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+.page-enter { animation: fadeIn 0.2s ease; }
+
+/* ── COLOR HELPERS ───────────────────────────────────────── */
+.bg-sky{background:linear-gradient(135deg,#2980b9,#4ab8e8);}
+.bg-pink{background:linear-gradient(135deg,#a01860,#e84f8c);}
+.bg-teal{background:linear-gradient(135deg,#1a8080,#3dbfbf);}
+.bg-gold{background:linear-gradient(135deg,#b8860b,#f5c842);}
+.bg-coral{background:linear-gradient(135deg,#b84a10,#f07a3a);}
+.bg-purple{background:linear-gradient(135deg,#4a2a7a,#7b5ea7);}
+.bg-navy{background:linear-gradient(135deg,#1a2060,#2d3b8e);}
+.bg-peach{background:linear-gradient(135deg,#b85530,#f0a07a);}
+.bg-red{background:linear-gradient(135deg,#8b1a1a,#e05c5c);}
+.bg-green{background:linear-gradient(135deg,#1a5a2a,#3dbf7a);}
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark"><i class="ti ti-heart-handshake"></i></div>
+    <div>
+      <div class="logo-name">IVB High Care</div>
+      <div class="logo-sub">Informatiegids</div>
+    </div>
+  </div>
+
+  <div class="sidebar-search">
+    <i class="ti ti-search"></i>
+    <input type="text" placeholder="Zoeken..." id="sidebarSearch" oninput="filterNav(this.value)">
+  </div>
+
+  <div class="sidebar-section-label">Inhoudstypen</div>
+  <div id="navItems">
+    <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+    <div class="nav-item" data-page="home" onclick="navigate('home')"><i class="ti ti-home"></i> Home pagina <span class="nav-badge">1</span></div>
+    <div class="nav-item" data-page="team" onclick="navigate('team')"><i class="ti ti-users"></i> Behandelteam <span class="nav-badge">9</span></div>
+    <div class="nav-item" data-page="programma" onclick="navigate('programma')"><i class="ti ti-calendar"></i> Dagprogramma <span class="nav-badge">14</span></div>
+    <div class="nav-item" data-page="regels" onclick="navigate('regels')"><i class="ti ti-clipboard-list"></i> Regels &amp; Visie <span class="nav-badge">6</span></div>
+    <div class="nav-item" data-page="contact" onclick="navigate('contact')"><i class="ti ti-phone"></i> Contact <span class="nav-badge">3</span></div>
+  </div>
+
+  <div class="sidebar-section-label" style="margin-top:8px">Bibliotheek</div>
+  <div class="nav-item" onclick="showToast('Media bibliotheek komt binnenkort','ti-photo')"><i class="ti ti-photo"></i> Media <span class="nav-badge">42</span></div>
+  <div class="nav-item" onclick="showToast('Tokens worden beheerd via JSON','ti-palette')"><i class="ti ti-palette"></i> Tokens</div>
+
+  <div class="sidebar-footer">
+    <div class="nav-item" onclick="showToast('Instellingen worden binnenkort toegevoegd','ti-settings')"><i class="ti ti-settings"></i> Instellingen</div>
+  </div>
+</aside>
+
+<!-- ── MAIN ────────────────────────────────────────────────── -->
+<div class="main">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="breadcrumb" id="breadcrumb">
+      <span>Inhoud</span>
+      <i class="ti ti-chevron-right" style="font-size:12px;color:var(--text3)"></i>
+      <strong id="breadcrumbCurrent">Alle inhoudstypen</strong>
+    </div>
+    <div class="topbar-actions">
+      <div class="status-pill" id="statusPill">
+        <div class="status-dot"></div>
+        Wijzigingen opgeslagen
+      </div>
+      <div class="history-chip" onclick="showToast('Geschiedenis wordt bijgehouden in de browser','ti-history')">
+        <i class="ti ti-history" style="font-size:14px"></i> Geschiedenis
+      </div>
+      <div class="topbar-btn" onclick="showPreview()" title="Voorvertoning">
+        <i class="ti ti-eye"></i> Voorvertoning
+      </div>
+      <div class="topbar-btn primary" onclick="publishAll()">
+        <i class="ti ti-send"></i> Publiceer
+      </div>
+      <div class="icon-btn2" onclick="toggleTheme()" title="Thema wisselen" id="themeBtn"><i class="ti ti-moon" id="themeIcon"></i></div>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <div class="workspace">
+
+    <!-- Editor -->
+    <div class="editor-area" id="editorArea">
+      <!-- Content rendered by JS -->
+    </div>
+
+    <!-- Preview -->
+    <div class="preview-pane" id="previewPane">
+      <div class="preview-header">
+        <i class="ti ti-device-mobile"></i> Preview
+        <div class="preview-tabs">
+          <div class="ptab active" onclick="switchPreviewTab('home',this)">Home</div>
+          <div class="ptab" onclick="switchPreviewTab('team',this)">Team</div>
+        </div>
+      </div>
+      <div class="preview-body">
+        <div class="phone-frame">
+          <div class="phone-screen" id="phoneScreen">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-backdrop" id="deleteModal">
+  <div class="modal">
+    <div class="modal-title">Item verwijderen?</div>
+    <div class="modal-body" id="deleteModalBody">Weet u zeker dat u dit item wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</div>
+    <div class="modal-actions">
+      <div class="btn-cancel" onclick="closeDeleteModal()">Annuleer</div>
+      <div class="btn-danger" id="confirmDeleteBtn">Verwijderen</div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="ti" id="toastIcon"></i><span id="toastMsg"></span></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   DATA — seeded from the JSON files in project
+══════════════════════════════════════════════════════════ */
+let data = {
+  home: {
+    hero_title: "Welkom op De Spreng",
+    hero_ward: "Afdeling ART",
+    hero_body: "Deze gids helpt u wegwijs tijdens uw verblijf op onze afdeling. U vindt hier informatie over uw behandelteam, dagprogramma, afdelingsregels en contactgegevens.",
+    notice_text: "Spreek uw persoonlijk begeleider aan. Zij zorgen dat uw vragen op de juiste plek terechtkomen.",
+    infomap_body: "Deze informatiegids bevat alles wat u nodig heeft tijdens uw verblijf op IVB High Care: uw behandelteam, dagindeling, therapieën, activiteiten, huisregels en contactgegevens."
+  },
+  team: { cards: [
+    { id: "behandelcoordinator", icon: "ti-clipboard-heart", color: "ic-navy", title: "Behandelcoördinator", subtitle: "Verantwoordelijk voor uw traject", body: "Uw behandelcoördinator is verantwoordelijk voor uw behandelovereenkomst en uw behandeltraject.\n\nBij opname heeft u een gesprek met de psychiater over uw wensen." },
+    { id: "regiebehandelaar", icon: "ti-brain", color: "ic-purple", title: "Regiebehandelaar", subtitle: "Medisch eindverantwoordelijk", body: "Uw regiebehandelaar kan de psychiater of verpleegkundig specialist zijn. Zij zijn medisch eindverantwoordelijk voor uw behandeling." },
+    { id: "huisarts", icon: "ti-stethoscope", color: "ic-teal", title: "Huisarts", subtitle: "Medische consulten op locatie", body: "Er is een mogelijkheid om de huisarts verbonden aan de kliniek te consulteren op IVB High Care." },
+    { id: "maatschappelijk", icon: "ti-building-community", color: "ic-coral", title: "Maatschappelijk werk", subtitle: "Praktische ondersteuning", body: "De maatschappelijk werkers van IVB High Care zijn bereikbaar voor vragen over uitkeringen en andere praktische zaken." },
+    { id: "ervaringsdeskundige", icon: "ti-user-heart", color: "ic-pink", title: "Ervaringsdeskundige", subtitle: "Lotgenotencontact & gesprek", body: "Binnen ons team bevindt zich een ervaringsdeskundige. Bij hem kunt u terecht om over uw behandeling te praten vanuit gedeeld perspectief." },
+    { id: "geestelijk", icon: "ti-sparkles", color: "ic-gold", title: "Geestelijk verzorger", subtitle: "Zingeving en levensvragen", body: "De geestelijk verzorger biedt ondersteuning bij zingeving, levensvragen, levensbeschouwing en spiritualiteit." },
+    { id: "begeleiders", icon: "ti-user-star", color: "ic-sky", title: "Persoonlijke begeleiders", subtitle: "4 vaste aanspreekpunten", body: "Het vaste team bestaat uit verpleegkundigen, agogisch medewerkers, beveiligers en ervaringsdeskundigen." },
+    { id: "netwerk", icon: "ti-network", color: "ic-peach", title: "Netwerk", subtitle: "Familie en naasten betrekken", body: "Met uw toestemming wordt uw netwerk nauw betrokken bij uw behandeling om bij te dragen aan uw herstel." },
+    { id: "overleg", icon: "ti-messages", color: "ic-navy", title: "Overlegvormen", subtitle: "ZAG en Dagelijks Overleg", body: "ZAG — Zorgafstemmingsgesprek\nGedurende uw opname heeft u met regelmaat een ZAG." }
+  ]},
+  programma: { cards: [
+    { id: "at", icon: "ti-palette", color: "ic-coral", title: "Activiteitentherapie (AT)", subtitle: "Intern: 5789", body: "Samen met u wordt onderzocht wat een passende dagactiviteit voor u is.", schedule: [{ day: "Maandag t/m vrijdag", rows: [{ time: "09:00 – 09:30", activity: "Wandeling" },{ time: "13:30 – 16:00", activity: "Activiteiten" }]}] },
+    { id: "tuin", icon: "ti-plant", color: "ic-green", title: "De Tuin", subtitle: "Intern: 2258 — vrijheden vereist", body: "Binnen en buiten allerlei activiteiten rondom tuinonderhoud.", schedule: [] },
+    { id: "sport", icon: "ti-run", color: "ic-teal", title: "Sporttijden", subtitle: "Fitness, wandelen, yoga & meer", body: "", schedule: [{ day: "Maandag", rows: [{ time: "13:15 – 15:00", activity: "Fitness & tafeltennis" }]}] },
+    { id: "modules", icon: "ti-puzzle", color: "ic-purple", title: "Modules", subtitle: "Behandelprogramma's", body: "De Carrousel vindt iedere woensdag plaats.", modules_list: ["Emotieregulatie training", "Sociale vaardigheidstraining", "Carrousel (woensdag)"], schedule: [] },
+    { id: "sop", icon: "ti-sofa", color: "ic-peach", title: "SOP", subtitle: "Sociaal Ontmoetingsplek", body: "De SOP is de plek waar u anderen kunt ontmoeten.", schedule: [] },
+    { id: "bezoek", icon: "ti-clock", color: "ic-sky", title: "Bezoektijden", subtitle: "Wanneer mogen bezoekers komen?", body: "Andere tijden zijn mogelijk in overleg met de afdeling.", schedule: [] }
+  ]},
+  regels: { cards: [
+    { id: "visie", icon: "ti-eye", color: "ic-teal", title: "Afdelingsvisie — ART", subtitle: "Active Recovery Triad", body: "Op IVB High Care werken we volgens de ART: Active Recovery Triad methodiek.", phases: [{ title: "Eerste week van opname", desc: "Intakegesprek, lichamelijk onderzoek, labafname." },{ title: "Diagnostiekfase", desc: "Onderzoeken en lijsten afnemen, observatiedoelen opstellen." },{ title: "Behandelfase", desc: "Op basis van alle bevindingen krijgt u een persoonlijk behandelplan." },{ title: "Uitstroomfase", desc: "Voorbereiding op uw vervolgplek." }] },
+    { id: "eten", icon: "ti-coffee", color: "ic-gold", title: "Eettijden & keuken", subtitle: "Ontbijt, lunch en avondeten", body: "", tijden: [{ label: "Ontbijt (inloop)", tijd: "08:00 – 09:00" },{ label: "Lunch", tijd: "Vanaf 12:15" },{ label: "Avondeten", tijd: "Vanaf 17:15" }] },
+    { id: "slaap", icon: "ti-moon", color: "ic-navy", title: "Slaap- en rusttijden", subtitle: "Nachtelijke stilte", body: "", tijden: [{ label: "Stilte op afdeling", tijd: "23:00 – 07:00" },{ label: "Nachtstand", tijd: "Vanaf 22:00" }] },
+    { id: "verboden", icon: "ti-ban", color: "ic-red", title: "Niet toegestaan op kamer", subtitle: "Verboden spullen", body: "Kleding & schoenen: alleen wat past in de kledingkast.", rules: ["Asbak, kaarsen, wierrook", "Waterkoker, kookplaat, televisie", "Alcohol, energiedrank, drugs", "Medicatie (beheer via verpleging)"] },
+    { id: "roken", icon: "ti-smoking", color: "ic-coral", title: "Roken", subtitle: "Alleen op aangewezen plekken buiten", body: "Roken is alleen toegestaan op daarvoor bestemde plekken op het terrein.", warning: "Bij roken op de slaapkamer wordt de tabak voor 24 uur ingenomen." },
+    { id: "pvp", icon: "ti-shield-check", color: "ic-teal", title: "Patiëntenvertrouwenspersoon (PVP)", subtitle: "Onafhankelijk en vertrouwelijk", body: "Heeft u vragen of klachten? Dan kunt u terecht bij de PVP." }
+  ]},
+  contact: {
+    persons: [
+      { id: "vp", initials: "VP", avatar_color: "av-sky", name: "Verpleegpost IVB HC", role: "24 uur per dag aanwezig", info: "Vraag uw begeleider om het nummer", info_color: "ci-sky" },
+      { id: "pb", initials: "PB", avatar_color: "av-teal", name: "Persoonlijk Begeleider", role: "4 vaste begeleiders", info: "Zie uw dagrooster", info_color: "ci-teal" },
+      { id: "pvp", initials: "PV", avatar_color: "av-pink", name: "Patiëntenvertrouwenspersoon", role: "Onafhankelijk en vertrouwelijk", info: "Op te vragen bij verpleging", info_color: "ci-sky" }
+    ],
+    tijden: [
+      { label: "Bezoek ma t/m vr", tijd: "19:00 – 21:00 uur" },
+      { label: "Bezoek weekend & feestdagen", tijd: "14:00–17:00 en 19:00–21:00" }
+    ],
+    tijden_note: "Andere tijden mogelijk in overleg met de afdeling."
+  }
+};
+
+/* ══════════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════════ */
+let currentPage = 'dashboard';
+let isDark = false;
+let deleteCallback = null;
+let saveTimer = null;
+
+const COLOR_OPTIONS = [
+  { value: 'ic-sky', label: 'Blauw' }, { value: 'ic-pink', label: 'Roze' },
+  { value: 'ic-teal', label: 'Teal' }, { value: 'ic-gold', label: 'Goud' },
+  { value: 'ic-coral', label: 'Koraal' }, { value: 'ic-purple', label: 'Paars' },
+  { value: 'ic-navy', label: 'Donkerblauw' }, { value: 'ic-peach', label: 'Perzik' },
+  { value: 'ic-red', label: 'Rood' }, { value: 'ic-green', label: 'Groen' }
+];
+const ICON_OPTIONS = [
+  'ti-clipboard-heart','ti-brain','ti-stethoscope','ti-building-community','ti-user-heart',
+  'ti-sparkles','ti-user-star','ti-network','ti-messages','ti-phone','ti-shield-check',
+  'ti-palette','ti-plant','ti-run','ti-puzzle','ti-sofa','ti-clock','ti-eye','ti-coffee',
+  'ti-moon','ti-ban','ti-smoking','ti-bottle','ti-tools','ti-camera-off','ti-list-check',
+  'ti-folder-open','ti-heart-handshake','ti-info-circle','ti-alert-triangle'
+];
+const CT_COLOR_MAP = {
+  'ic-sky':'bg-sky','ic-pink':'bg-pink','ic-teal':'bg-teal','ic-gold':'bg-gold',
+  'ic-coral':'bg-coral','ic-purple':'bg-purple','ic-navy':'bg-navy','ic-peach':'bg-peach',
+  'ic-red':'bg-red','ic-green':'bg-green'
+};
+
+function icToBg(ic) { return CT_COLOR_MAP[ic] || 'bg-sky'; }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ══════════════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════════════ */
+function navigate(page) {
+  currentPage = page;
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.dataset.page === page);
+  });
+  const labels = { dashboard:'Alle inhoudstypen', home:'Home pagina', team:'Behandelteam', programma:'Dagprogramma', regels:'Regels & Visie', contact:'Contact' };
+  document.getElementById('breadcrumbCurrent').textContent = labels[page] || page;
+  renderPage(page);
+}
+
+function filterNav(q) {
+  document.querySelectorAll('#navItems .nav-item').forEach(n => {
+    n.style.display = n.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   RENDER ROUTER
+══════════════════════════════════════════════════════════ */
+function renderPage(page) {
+  const area = document.getElementById('editorArea');
+  area.innerHTML = '';
+  area.classList.remove('page-enter');
+  void area.offsetWidth;
+  area.classList.add('page-enter');
+
+  if (page === 'dashboard') renderDashboard(area);
+  else if (page === 'home') renderHomeEditor(area);
+  else if (page === 'team') renderCardListEditor(area, 'team', 'Behandelteam', 'Kaarten', 'ti-users', true);
+  else if (page === 'programma') renderCardListEditor(area, 'programma', 'Dagprogramma', 'Kaarten', 'ti-calendar', true);
+  else if (page === 'regels') renderCardListEditor(area, 'regels', 'Regels & Visie', 'Kaarten', 'ti-clipboard-list', true);
+  else if (page === 'contact') renderContactEditor(area);
+
+  updatePhonePreview();
+}
+
+/* ══════════════════════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════════════════════ */
+function renderDashboard(area) {
+  const cards = [
+    { key:'home', icon:'ti-home', color:'bg-coral', name:'Home pagina', desc:'Welkomstscherm & hoofdmenu', count: 1 },
+    { key:'team', icon:'ti-users', color:'bg-pink', name:'Behandelteam', desc:'Behandelaars & rollen', count: data.team.cards.length },
+    { key:'programma', icon:'ti-calendar', color:'bg-gold', name:'Dagprogramma', desc:'Activiteiten & sport', count: data.programma.cards.length },
+    { key:'regels', icon:'ti-clipboard-list', color:'bg-teal', name:'Regels & Visie', desc:'Huisregels en afdelingsvisie', count: data.regels.cards.length },
+    { key:'contact', icon:'ti-phone', color:'bg-sky', name:'Contact', desc:'Nummers, locatie & openingstijden', count: data.contact.persons.length },
+  ];
+
+  area.innerHTML = `
+    <div class="page-header">
+      <div>
+        <div class="page-type-label"><i class="ti ti-layout-grid"></i> Inhoudstypen</div>
+        <div class="page-title-big">Wat wilt u vandaag bewerken?</div>
+        <div class="page-meta">IVB High Care Informatiegids CMS</div>
+      </div>
+      <div class="page-actions">
+        <div class="topbar-btn" onclick="showToast('Nieuw inhoudstype aanmaken — binnenkort beschikbaar','ti-plus')"><i class="ti ti-plus"></i> Nieuw type</div>
+      </div>
+    </div>
+    <div class="info-banner">
+      <i class="ti ti-info-circle"></i>
+      <div>Alle wijzigingen worden automatisch opgeslagen. Klik op <strong>Publiceer</strong> rechtsboven om uw aanpassingen live te zetten in de IVB-app.</div>
+    </div>
+    <div class="content-types-grid">
+      ${cards.map(c => `
+        <div class="content-type-card" onclick="navigate('${c.key}')">
+          <div class="ct-icon ${c.color}"><i class="ti ${c.icon}"></i></div>
+          <div class="ct-name">${esc(c.name)}</div>
+          <div class="ct-desc">${esc(c.desc)}</div>
+          <div class="ct-footer">
+            <span class="ct-count">${c.count} item${c.count !== 1 ? 's' : ''} · bijgewerkt zojuist</span>
+            <span class="ct-edit">Bewerken <i class="ti ti-chevron-right" style="font-size:13px"></i></span>
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HOME EDITOR
+══════════════════════════════════════════════════════════ */
+function renderHomeEditor(area) {
+  const h = data.home;
+  area.innerHTML = `
+    <div class="page-header">
+      <div>
+        <div class="page-type-label"><i class="ti ti-home"></i> Inhoudstype</div>
+        <div class="page-title-big">Home pagina</div>
+        <div class="page-meta">1 item · 5 velden</div>
+      </div>
+      <div class="page-actions">
+        <div class="topbar-btn" onclick="navigate('dashboard')"><i class="ti ti-arrow-left"></i> Terug</div>
+      </div>
+    </div>
+
+    <div class="section-group">
+      <div class="section-group-header" onclick="toggleSectionGroup(this)">
+        <i class="ti ti-home sg-icon"></i>
+        <div class="sg-title">Welkom <span style="color:var(--text3);font-weight:400;font-size:12px">Verschijnt boven in de IVB-app</span></div>
+        <span class="sg-badge">2 velden</span>
+        <i class="ti ti-chevron-down sg-toggle open"></i>
+      </div>
+      <div class="section-group-body">
+        <div class="field">
+          <div class="field-label">Welkomsttitel <span class="char-count" id="cc-hero_title">${h.hero_title.length} / 80</span></div>
+          <input class="input" id="f-hero_title" value="${esc(h.hero_title)}" maxlength="80" oninput="updateHome('hero_title',this.value);updateCharCount('hero_title',this.value,80)">
+          <div class="field-hint">De grote serif-kop in de welkomstkaart.</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Afdelingsnaam (onder titel) <span class="char-count" id="cc-hero_ward">${h.hero_ward.length} / 40</span></div>
+          <input class="input" id="f-hero_ward" value="${esc(h.hero_ward)}" maxlength="40" oninput="updateHome('hero_ward',this.value);updateCharCount('hero_ward',this.value,40)">
+          <div class="field-hint">Toon in hoofdletters onder de titel.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-group">
+      <div class="section-group-header" onclick="toggleSectionGroup(this)">
+        <i class="ti ti-align-left sg-icon"></i>
+        <div class="sg-title">Welkomsttekst <span style="color:var(--text3);font-weight:400;font-size:12px">Inleidende paragraaf onder de titel</span></div>
+        <span class="sg-badge">1 veld</span>
+        <i class="ti ti-chevron-down sg-toggle open"></i>
+      </div>
+      <div class="section-group-body">
+        <div class="field">
+          <div class="field-label">Welkomsttekst <span class="char-count" id="cc-hero_body">${h.hero_body.length} / 280</span></div>
+          <textarea class="textarea" id="f-hero_body" maxlength="280" oninput="updateHome('hero_body',this.value);updateCharCount('hero_body',this.value,280)">${esc(h.hero_body)}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-group">
+      <div class="section-group-header" onclick="toggleSectionGroup(this)">
+        <i class="ti ti-info-circle sg-icon"></i>
+        <div class="sg-title">Mededeling <span style="color:var(--text3);font-weight:400;font-size:12px">Blauw infoblokje direct onder de welkomstkaart</span></div>
+        <span class="sg-badge">info-stijl</span>
+        <i class="ti ti-chevron-down sg-toggle open"></i>
+      </div>
+      <div class="section-group-body">
+        <div class="field">
+          <div class="field-label">Mededeling <span class="char-count" id="cc-notice_text">${h.notice_text.length} / 200</span></div>
+          <textarea class="textarea" id="f-notice_text" maxlength="200" style="min-height:70px" oninput="updateHome('notice_text',this.value);updateCharCount('notice_text',this.value,200)">${esc(h.notice_text)}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-group">
+      <div class="section-group-header" onclick="toggleSectionGroup(this)">
+        <i class="ti ti-folder-open sg-icon"></i>
+        <div class="sg-title">Informatiemap <span style="color:var(--text3);font-weight:400;font-size:12px">Korte beschrijving in de blauwe map-tegel onderaan</span></div>
+        <span class="sg-badge">1 veld</span>
+        <i class="ti ti-chevron-down sg-toggle open"></i>
+      </div>
+      <div class="section-group-body">
+        <div class="field">
+          <div class="field-label">Informatiemap beschrijving</div>
+          <textarea class="textarea" id="f-infomap_body" oninput="updateHome('infomap_body',this.value)">${esc(h.infomap_body)}</textarea>
+        </div>
+      </div>
+    </div>`;
+}
+
+function updateHome(key, val) {
+  data.home[key] = val;
+  triggerAutoSave();
+  updatePhonePreview();
+}
+function updateCharCount(key, val, max) {
+  const el = document.getElementById('cc-' + key);
+  if (el) el.textContent = val.length + ' / ' + max;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARD LIST EDITOR (team / programma / regels)
+══════════════════════════════════════════════════════════ */
+function renderCardListEditor(area, section, title, listLabel, icon, canAdd) {
+  const cards = data[section].cards;
+  area.innerHTML = `
+    <div class="page-header">
+      <div>
+        <div class="page-type-label"><i class="ti ${icon}"></i> Inhoudstype</div>
+        <div class="page-title-big">${esc(title)}</div>
+        <div class="page-meta">${cards.length} item${cards.length!==1?'s':''} · kaartweergave</div>
+      </div>
+      <div class="page-actions">
+        <div class="topbar-btn" onclick="navigate('dashboard')"><i class="ti ti-arrow-left"></i> Terug</div>
+      </div>
+    </div>
+    <div class="card-list" id="cardList-${section}">
+      ${cards.map((c,i) => renderCardItem(section, c, i)).join('')}
+    </div>
+    ${canAdd ? `<div class="add-card-btn" onclick="addCard('${section}')"><i class="ti ti-plus"></i> Nieuwe kaart toevoegen</div>` : ''}`;
+}
+
+function renderCardItem(section, card, idx) {
+  const bgClass = icToBg(card.color || 'ic-sky');
+  const hasTijden = card.tijden && card.tijden.length > 0;
+  const hasRules = card.rules && card.rules.length > 0;
+  const hasPhases = card.phases && card.phases.length > 0;
+  const hasWarning = card.warning;
+  const hasSchedule = card.schedule && card.schedule.length > 0;
+
+  return `
+  <div class="card-item" id="ci-${section}-${idx}">
+    <div class="card-item-header" onclick="toggleCardItem(this)">
+      <div class="card-color-dot ${bgClass}"><i class="ti ${esc(card.icon||'ti-circle')}"></i></div>
+      <div>
+        <div class="card-item-title">${esc(card.title||'Nieuw item')}</div>
+        <div class="card-item-sub">${esc(card.subtitle||'')}</div>
+      </div>
+      <div class="card-item-actions">
+        <div class="ci-btn" onclick="event.stopPropagation();duplicateCard('${section}',${idx})" title="Dupliceer"><i class="ti ti-copy"></i></div>
+        <div class="ci-btn del" onclick="event.stopPropagation();confirmDelete('Kaart verwijderen','Wilt u &ldquo;${esc(card.title)}&rdquo; permanent verwijderen?',()=>deleteCard('${section}',${idx}))" title="Verwijder"><i class="ti ti-trash"></i></div>
+      </div>
+      <i class="ti ti-chevron-down ci-chevron"></i>
+    </div>
+    <div class="card-item-body">
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">Icoon</div>
+          <select class="select" onchange="updateCard('${section}',${idx},'icon',this.value);rerenderCard('${section}',${idx})">
+            ${ICON_OPTIONS.map(ic => `<option value="${ic}"${card.icon===ic?' selected':''}>${ic.replace('ti-','')}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <div class="field-label">Kleur</div>
+          <select class="select" onchange="updateCard('${section}',${idx},'color',this.value);rerenderCard('${section}',${idx})">
+            ${COLOR_OPTIONS.map(c => `<option value="${c.value}"${card.color===c.value?' selected':''}>${c.label}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Titel</div>
+        <input class="input" value="${esc(card.title)}" oninput="updateCard('${section}',${idx},'title',this.value);rerenderCardHeader('${section}',${idx},this.value,'title')">
+      </div>
+      <div class="field">
+        <div class="field-label">Subtitel</div>
+        <input class="input" value="${esc(card.subtitle)}" oninput="updateCard('${section}',${idx},'subtitle',this.value);rerenderCardHeader('${section}',${idx},this.value,'sub')">
+      </div>
+      <div class="field">
+        <div class="field-label">Tekst (gebruik lege regel voor nieuwe alinea)</div>
+        <textarea class="textarea" oninput="updateCard('${section}',${idx},'body',this.value)">${esc(card.body||'')}</textarea>
+      </div>
+      ${hasWarning !== undefined && section === 'regels' ? renderWarningField(section, idx, card.warning) : ''}
+      ${section === 'regels' ? renderRulesField(section, idx, card.rules || []) : ''}
+      ${hasTijden || section === 'regels' ? renderTijdenField(section, idx, card.tijden || []) : ''}
+      ${hasPhases || (section === 'regels' && card.id === 'visie') ? renderPhasesField(section, idx, card.phases || []) : ''}
+      ${section === 'programma' ? renderScheduleField(section, idx, card.schedule || []) : ''}
+    </div>
+  </div>`;
+}
+
+/* sub-field renderers */
+function renderWarningField(section, idx, val) {
+  return `<div class="field">
+    <div class="field-label">Waarschuwing (geel blokje, optioneel)</div>
+    <input class="input" placeholder="Bijv: Bij herhaling kan dit worden uitgebreid." value="${esc(val||'')}" oninput="updateCard('${section}',${idx},'warning',this.value)">
+  </div>`;
+}
+
+function renderRulesField(section, idx, rules) {
+  return `<div class="field">
+    <div class="field-label">Verboden items (lijst met kruisjes)</div>
+    <div class="sub-list" id="rules-${section}-${idx}">
+      ${rules.map((r,ri) => `<div class="sub-item"><input class="input" value="${esc(r)}" oninput="updateSubItem('${section}',${idx},'rules',${ri},this.value)" placeholder="Verboden item..."><div class="sub-del" onclick="removeSubItem('${section}',${idx},'rules',${ri})"><i class="ti ti-x"></i></div></div>`).join('')}
+    </div>
+    <div class="add-sub-btn" onclick="addSubItem('${section}',${idx},'rules')"><i class="ti ti-plus"></i> Regel toevoegen</div>
+  </div>`;
+}
+
+function renderTijdenField(section, idx, tijden) {
+  return `<div class="field">
+    <div class="field-label">Tijden (info rijen)</div>
+    <div class="sub-list" id="tijden-${section}-${idx}">
+      ${tijden.map((t,ti) => `<div class="sub-item"><input class="input" value="${esc(t.label)}" placeholder="Label" oninput="updateSubItemObj('${section}',${idx},'tijden',${ti},'label',this.value)" style="min-width:120px"><input class="input" value="${esc(t.tijd)}" placeholder="Tijd" oninput="updateSubItemObj('${section}',${idx},'tijden',${ti},'tijd',this.value)"><div class="sub-del" onclick="removeSubItemObj('${section}',${idx},'tijden',${ti})"><i class="ti ti-x"></i></div></div>`).join('')}
+    </div>
+    <div class="add-sub-btn" onclick="addSubItemObj('${section}',${idx},'tijden',{label:'',tijd:''})"><i class="ti ti-plus"></i> Tijd toevoegen</div>
+  </div>`;
+}
+
+function renderPhasesField(section, idx, phases) {
+  return `<div class="field">
+    <div class="field-label">Behandelfases</div>
+    <div class="sub-list" id="phases-${section}-${idx}">
+      ${phases.map((p,pi) => `<div class="sub-item" style="flex-direction:column;align-items:stretch"><div style="display:flex;gap:8px;align-items:center"><input class="input" value="${esc(p.title)}" placeholder="Fase titel" oninput="updateSubItemObj('${section}',${idx},'phases',${pi},'title',this.value)"><div class="sub-del" onclick="removeSubItemObj('${section}',${idx},'phases',${pi})"><i class="ti ti-x"></i></div></div><textarea class="textarea" style="min-height:56px;margin-top:6px" oninput="updateSubItemObj('${section}',${idx},'phases',${pi},'desc',this.value)">${esc(p.desc)}</textarea></div>`).join('')}
+    </div>
+    <div class="add-sub-btn" onclick="addSubItemObj('${section}',${idx},'phases',{title:'',desc:''})"><i class="ti ti-plus"></i> Fase toevoegen</div>
+  </div>`;
+}
+
+function renderScheduleField(section, idx, schedule) {
+  return `<div class="field">
+    <div class="field-label">Rooster</div>
+    <div class="sub-list">
+      ${schedule.map((blk,bi) => `
+        <div class="sub-item" style="flex-direction:column;align-items:stretch">
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px">
+            <input class="input" value="${esc(blk.day)}" placeholder="Dag bijv. Maandag" oninput="updateScheduleDay('${section}',${idx},${bi},this.value)">
+            <div class="sub-del" onclick="removeScheduleBlock('${section}',${idx},${bi})"><i class="ti ti-x"></i></div>
+          </div>
+          ${(blk.rows||[]).map((r,ri) => `<div class="sub-item" style="margin-bottom:4px"><input class="input" value="${esc(r.time)}" placeholder="09:00–10:00" oninput="updateScheduleRow('${section}',${idx},${bi},${ri},'time',this.value)" style="min-width:100px"><input class="input" value="${esc(r.activity||'')}" placeholder="Activiteit" oninput="updateScheduleRow('${section}',${idx},${bi},${ri},'activity',this.value)"><div class="sub-del" onclick="removeScheduleRow('${section}',${idx},${bi},${ri})"><i class="ti ti-x"></i></div></div>`).join('')}
+          <div class="add-sub-btn" onclick="addScheduleRow('${section}',${idx},${bi})"><i class="ti ti-plus"></i> Rij toevoegen</div>
+        </div>`).join('')}
+    </div>
+    <div class="add-sub-btn" onclick="addScheduleBlock('${section}',${idx})"><i class="ti ti-plus"></i> Dag toevoegen</div>
+  </div>`;
+}
+
+/* ── card mutations ── */
+function updateCard(section, idx, key, val) {
+  data[section].cards[idx][key] = val;
+  triggerAutoSave();
+  updatePhonePreview();
+}
+
+function rerenderCard(section, idx) {
+  const el = document.getElementById(`ci-${section}-${idx}`);
+  if (!el) return;
+  const wasOpen = el.classList.contains('open');
+  el.outerHTML = renderCardItem(section, data[section].cards[idx], idx);
+  const newEl = document.getElementById(`ci-${section}-${idx}`);
+  if (wasOpen && newEl) { newEl.classList.add('open'); }
+}
+
+function rerenderCardHeader(section, idx, val, type) {
+  const el = document.getElementById(`ci-${section}-${idx}`);
+  if (!el) return;
+  if (type === 'title') { const t = el.querySelector('.card-item-title'); if(t) t.textContent = val; }
+  if (type === 'sub') { const s = el.querySelector('.card-item-sub'); if(s) s.textContent = val; }
+}
+
+function toggleCardItem(header) {
+  const card = header.closest('.card-item');
+  card.classList.toggle('open');
+}
+
+function addCard(section) {
+  const id = 'card_' + Date.now();
+  data[section].cards.push({ id, icon: 'ti-circle', color: 'ic-sky', title: 'Nieuwe kaart', subtitle: 'Subtitel', body: '' });
+  renderPage(section);
+  // open the new card
+  setTimeout(() => {
+    const cards = document.querySelectorAll(`#cardList-${section} .card-item`);
+    if (cards.length) cards[cards.length-1].classList.add('open');
+  }, 50);
+  showToast('Nieuwe kaart toegevoegd','ti-plus');
+}
+
+function duplicateCard(section, idx) {
+  const clone = JSON.parse(JSON.stringify(data[section].cards[idx]));
+  clone.id = clone.id + '_copy';
+  clone.title += ' (kopie)';
+  data[section].cards.splice(idx+1, 0, clone);
+  renderPage(section);
+  showToast('Kaart gedupliceerd','ti-copy');
+}
+
+function deleteCard(section, idx) {
+  data[section].cards.splice(idx, 1);
+  renderPage(section);
+  showToast('Kaart verwijderd','ti-trash');
+}
+
+/* sub items */
+function updateSubItem(section, idx, key, subIdx, val) {
+  data[section].cards[idx][key][subIdx] = val;
+  triggerAutoSave();
+}
+function removeSubItem(section, idx, key, subIdx) {
+  data[section].cards[idx][key].splice(subIdx, 1);
+  rerenderCard(section, idx);
+}
+function addSubItem(section, idx, key) {
+  if (!data[section].cards[idx][key]) data[section].cards[idx][key] = [];
+  data[section].cards[idx][key].push('');
+  rerenderCard(section, idx);
+  const el = document.getElementById(`ci-${section}-${idx}`);
+  if (el) el.classList.add('open');
+}
+
+function updateSubItemObj(section, idx, key, subIdx, field, val) {
+  data[section].cards[idx][key][subIdx][field] = val;
+  triggerAutoSave();
+}
+function removeSubItemObj(section, idx, key, subIdx) {
+  data[section].cards[idx][key].splice(subIdx, 1);
+  rerenderCard(section, idx);
+  const el = document.getElementById(`ci-${section}-${idx}`);
+  if (el) el.classList.add('open');
+}
+function addSubItemObj(section, idx, key, template) {
+  if (!data[section].cards[idx][key]) data[section].cards[idx][key] = [];
+  data[section].cards[idx][key].push({...template});
+  rerenderCard(section, idx);
+  const el = document.getElementById(`ci-${section}-${idx}`);
+  if (el) el.classList.add('open');
+}
+
+function updateScheduleDay(section, idx, bi, val) { data[section].cards[idx].schedule[bi].day = val; triggerAutoSave(); }
+function updateScheduleRow(section, idx, bi, ri, field, val) { data[section].cards[idx].schedule[bi].rows[ri][field] = val; triggerAutoSave(); }
+function removeScheduleBlock(section, idx, bi) { data[section].cards[idx].schedule.splice(bi,1); rerenderCard(section,idx); const el=document.getElementById(`ci-${section}-${idx}`); if(el)el.classList.add('open'); }
+function removeScheduleRow(section, idx, bi, ri) { data[section].cards[idx].schedule[bi].rows.splice(ri,1); rerenderCard(section,idx); const el=document.getElementById(`ci-${section}-${idx}`); if(el)el.classList.add('open'); }
+function addScheduleBlock(section, idx) { if(!data[section].cards[idx].schedule)data[section].cards[idx].schedule=[]; data[section].cards[idx].schedule.push({day:'',rows:[]}); rerenderCard(section,idx); const el=document.getElementById(`ci-${section}-${idx}`); if(el)el.classList.add('open'); }
+function addScheduleRow(section, idx, bi) { data[section].cards[idx].schedule[bi].rows.push({time:'',activity:''}); rerenderCard(section,idx); const el=document.getElementById(`ci-${section}-${idx}`); if(el)el.classList.add('open'); }
+
+/* ══════════════════════════════════════════════════════════
+   CONTACT EDITOR
+══════════════════════════════════════════════════════════ */
+function renderContactEditor(area) {
+  const d = data.contact;
+  const avatarColors = ['av-sky','av-teal','av-pink','av-coral','av-gold','av-purple'];
+  const infoColors = ['ci-sky','ci-teal','ci-gold','ci-coral'];
+  const infoColorLabels = { 'ci-sky':'Blauw','ci-teal':'Teal','ci-gold':'Goud','ci-coral':'Koraal' };
+  const avatarColorLabels = { 'av-sky':'Blauw','av-teal':'Teal','av-pink':'Roze','av-coral':'Koraal','av-gold':'Goud','av-purple':'Paars' };
+  const avBg = { 'av-sky':'bg-sky','av-teal':'bg-teal','av-pink':'bg-pink','av-coral':'bg-coral','av-gold':'bg-gold','av-purple':'bg-purple' };
+
+  area.innerHTML = `
+    <div class="page-header">
+      <div>
+        <div class="page-type-label"><i class="ti ti-phone"></i> Inhoudstype</div>
+        <div class="page-title-big">Contact</div>
+        <div class="page-meta">${d.persons.length} contactpersonen</div>
+      </div>
+      <div class="page-actions">
+        <div class="topbar-btn" onclick="navigate('dashboard')"><i class="ti ti-arrow-left"></i> Terug</div>
+      </div>
+    </div>
+
+    <div class="section-group">
+      <div class="section-group-header" onclick="toggleSectionGroup(this)">
+        <i class="ti ti-users sg-icon"></i>
+        <div class="sg-title">Contactpersonen</div>
+        <span class="sg-badge">${d.persons.length} personen</span>
+        <i class="ti ti-chevron-down sg-toggle open"></i>
+      </div>
+      <div class="section-group-body">
+        <div class="card-list" id="personsList">
+          ${d.persons.map((p,i) => `
+          <div class="card-item" id="cp-${i}">
+            <div class="card-item-header" onclick="toggleCardItem(this)">
+              <div class="card-color-dot ${avBg[p.avatar_color]||'bg-sky'}" style="font-size:13px;font-weight:700">${esc(p.initials)}</div>
+              <div>
+                <div class="card-item-title">${esc(p.name)}</div>
+                <div class="card-item-sub">${esc(p.role)}</div>
+              </div>
+              <div class="card-item-actions">
+                <div class="ci-btn del" onclick="event.stopPropagation();confirmDelete('Contactpersoon verwijderen','Wilt u &ldquo;${esc(p.name)}&rdquo; verwijderen?',()=>{data.contact.persons.splice(${i},1);renderContactEditor(document.getElementById('editorArea'));showToast('Verwijderd','ti-trash')})" title="Verwijder"><i class="ti ti-trash"></i></div>
+              </div>
+              <i class="ti ti-chevron-down ci-chevron"></i>
+            </div>
+            <div class="card-item-body">
+              <div class="field-row">
+                <div class="field">
+                  <div class="field-label">Initialen (2 letters)</div>
+                  <input class="input" value="${esc(p.initials)}" maxlength="2" oninput="data.contact.persons[${i}].initials=this.value;triggerAutoSave()">
+                </div>
+                <div class="field">
+                  <div class="field-label">Avatar kleur</div>
+                  <select class="select" onchange="data.contact.persons[${i}].avatar_color=this.value;triggerAutoSave()">
+                    ${avatarColors.map(c=>`<option value="${c}"${p.avatar_color===c?' selected':''}>${avatarColorLabels[c]||c}</option>`).join('')}
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field-label">Naam</div>
+                <input class="input" value="${esc(p.name)}" oninput="data.contact.persons[${i}].name=this.value;triggerAutoSave()">
+              </div>
+              <div class="field">
+                <div class="field-label">Rol / beschrijving</div>
+                <input class="input" value="${esc(p.role)}" oninput="data.contact.persons[${i}].role=this.value;triggerAutoSave()">
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <div class="field-label">Contactinfo</div>
+                  <input class="input" value="${esc(p.info)}" oninput="data.contact.persons[${i}].info=this.value;triggerAutoSave()">
+                </div>
+                <div class="field">
+                  <div class="field-label">Info kleur</div>
+                  <select class="select" onchange="data.contact.persons[${i}].info_color=this.value;triggerAutoSave()">
+                    ${infoColors.map(c=>`<option value="${c}"${p.info_color===c?' selected':''}>${infoColorLabels[c]||c}</option>`).join('')}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>`).join('')}
+        </div>
+        <div class="add-card-btn" onclick="data.contact.persons.push({id:'p'+Date.now(),initials:'NW',avatar_color:'av-sky',name:'Nieuwe persoon',role:'Rol',info:'Contactinfo',info_color:'ci-sky'});renderContactEditor(document.getElementById('editorArea'));showToast('Contactpersoon toegevoegd','ti-plus')">
+          <i class="ti ti-plus"></i> Contactpersoon toevoegen
+        </div>
+      </div>
+    </div>
+
+    <div class="section-group">
+      <div class="section-group-header" onclick="toggleSectionGroup(this)">
+        <i class="ti ti-clock sg-icon"></i>
+        <div class="sg-title">Openingstijden</div>
+        <span class="sg-badge">${d.tijden.length} rijen</span>
+        <i class="ti ti-chevron-down sg-toggle open"></i>
+      </div>
+      <div class="section-group-body">
+        <div class="sub-list" id="contactTijdenList">
+          ${d.tijden.map((t,i) => `<div class="sub-item"><input class="input" value="${esc(t.label)}" placeholder="Label" oninput="data.contact.tijden[${i}].label=this.value;triggerAutoSave()" style="min-width:120px"><input class="input" value="${esc(t.tijd)}" placeholder="Tijd" oninput="data.contact.tijden[${i}].tijd=this.value;triggerAutoSave()"><div class="sub-del" onclick="data.contact.tijden.splice(${i},1);renderContactEditor(document.getElementById('editorArea'))"><i class="ti ti-x"></i></div></div>`).join('')}
+        </div>
+        <div class="add-sub-btn" onclick="data.contact.tijden.push({label:'',tijd:''});renderContactEditor(document.getElementById('editorArea'))"><i class="ti ti-plus"></i> Tijd toevoegen</div>
+        <hr class="divider">
+        <div class="field">
+          <div class="field-label">Toelichting tijden</div>
+          <input class="input" value="${esc(d.tijden_note)}" oninput="data.contact.tijden_note=this.value;triggerAutoSave()">
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SECTION GROUP TOGGLE
+══════════════════════════════════════════════════════════ */
+function toggleSectionGroup(header) {
+  const group = header.closest('.section-group');
+  const body = group.querySelector('.section-group-body');
+  const toggle = header.querySelector('.sg-toggle');
+  const isOpen = toggle.classList.contains('open');
+  if (isOpen) { body.style.display = 'none'; toggle.classList.remove('open'); }
+  else { body.style.display = ''; toggle.classList.add('open'); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PHONE PREVIEW
+══════════════════════════════════════════════════════════ */
+let previewTab = 'home';
+function switchPreviewTab(tab, el) {
+  previewTab = tab;
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  updatePhonePreview();
+}
+
+function updatePhonePreview() {
+  const screen = document.getElementById('phoneScreen');
+  if (previewTab === 'home') {
+    const h = data.home;
+    screen.innerHTML = `
+      <div class="ph-header">
+        <div class="ph-logo"><i class="ti ti-heart-handshake" style="font-size:10px;color:#fff"></i></div>
+        <div>
+          <div class="ph-name">De Spreng</div>
+          <div class="ph-sub">Informatiegids</div>
+        </div>
+        <div class="ph-icons"><div class="ph-ic">🔍</div><div class="ph-ic">🌙</div></div>
+      </div>
+      <div class="ph-content">
+        <div class="ph-hero">
+          <div class="ph-hero-icon"><i class="ti ti-heart-handshake"></i></div>
+          <div class="ph-hero-title">${esc(h.hero_title)}</div>
+          <div class="ph-hero-ward">${esc(h.hero_ward)}</div>
+          <div class="ph-hero-body">${esc(h.hero_body)}</div>
+        </div>
+        <div class="ph-notice">
+          <i class="ti ti-info-circle"></i>
+          <p><strong>Vragen?</strong> ${esc(h.notice_text)}</p>
+        </div>
+        <div class="ph-label">Snel naar</div>
+        <div class="ph-grid">
+          <div class="ph-tile"><div class="ph-tile-icon" style="color:#e84f8c">👥</div><div class="ph-tile-label">Behandelteam</div><div class="ph-tile-sub">Uw behandelaars</div></div>
+          <div class="ph-tile"><div class="ph-tile-icon" style="color:#3dbfbf">📅</div><div class="ph-tile-label">Dagprogramma</div><div class="ph-tile-sub">Activiteiten & sport</div></div>
+          <div class="ph-tile"><div class="ph-tile-icon" style="color:#f5c842">📋</div><div class="ph-tile-label">Regels & Visie</div><div class="ph-tile-sub">Huisregels afdeling</div></div>
+          <div class="ph-tile"><div class="ph-tile-icon" style="color:#f07a3a">📞</div><div class="ph-tile-label">Contact</div><div class="ph-tile-sub">Nummers & tijden</div></div>
+        </div>
+      </div>
+      <div class="ph-nav">
+        <div class="ph-nav-item active"><i class="ti ti-home"></i><span>Home</span></div>
+        <div class="ph-nav-item"><i class="ti ti-users"></i><span>Team</span></div>
+        <div class="ph-nav-item"><i class="ti ti-calendar"></i><span>Programma</span></div>
+        <div class="ph-nav-item"><i class="ti ti-clipboard-list"></i><span>Regels</span></div>
+        <div class="ph-nav-item"><i class="ti ti-phone"></i><span>Contact</span></div>
+      </div>`;
+  } else {
+    const cards = data.team.cards.slice(0,4);
+    screen.innerHTML = `
+      <div class="ph-header">
+        <div class="ph-logo"><i class="ti ti-heart-handshake" style="font-size:10px;color:#fff"></i></div>
+        <div><div class="ph-name">De Spreng</div><div class="ph-sub">Informatiegids</div></div>
+        <div class="ph-icons"><div class="ph-ic">🔍</div><div class="ph-ic">🌙</div></div>
+      </div>
+      <div class="ph-content">
+        <div class="ph-label" style="margin-bottom:8px;font-size:8.5px;color:#eef1f8;font-weight:700">Behandelteam</div>
+        ${cards.map(c => {
+          const bgMap={'ic-sky':'#2980b9','ic-pink':'#a01860','ic-teal':'#1a8080','ic-gold':'#b8860b','ic-coral':'#b84a10','ic-purple':'#4a2a7a','ic-navy':'#1a2060','ic-peach':'#b85530','ic-red':'#8b1a1a','ic-green':'#1a5a2a'};
+          const bg = bgMap[c.color] || '#2980b9';
+          return `<div style="display:flex;align-items:center;gap:8px;background:#1c2235;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:8px 10px;margin-bottom:6px">
+            <div style="width:28px;height:28px;border-radius:7px;background:${bg};display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ${c.icon}" style="font-size:13px;color:#fff"></i></div>
+            <div><div style="font-size:9px;font-weight:700;color:#eef1f8">${esc(c.title)}</div><div style="font-size:7.5px;color:#8b95b0;margin-top:1px">${esc(c.subtitle)}</div></div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="ph-nav">
+        <div class="ph-nav-item"><i class="ti ti-home"></i><span>Home</span></div>
+        <div class="ph-nav-item active"><i class="ti ti-users"></i><span>Team</span></div>
+        <div class="ph-nav-item"><i class="ti ti-calendar"></i><span>Programma</span></div>
+        <div class="ph-nav-item"><i class="ti ti-clipboard-list"></i><span>Regels</span></div>
+        <div class="ph-nav-item"><i class="ti ti-phone"></i><span>Contact</span></div>
+      </div>`;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   AUTO SAVE
+══════════════════════════════════════════════════════════ */
+/* ── unsaved changes tracker ── */
+let hasUnsavedChanges = false;
+
+function triggerAutoSave() {
+  hasUnsavedChanges = true;
+  const pill = document.getElementById('statusPill');
+  pill.classList.add('saving');
+  pill.innerHTML = '<div class="status-dot"></div> Niet gepubliceerd';
+  // always persist locally so nothing is lost on refresh
+  try { localStorage.setItem('ivb-cms-data', JSON.stringify(data)); } catch(e) {}
+}
+
+/* ══════════════════════════════════════════════════════════
+   PUBLISH — sends all JSON files to GitHub via Netlify Function
+══════════════════════════════════════════════════════════ */
+async function publishAll() {
+  const btn = document.querySelector('.topbar-btn.primary');
+  const pill = document.getElementById('statusPill');
+
+  btn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> Publiceren...';
+  btn.style.pointerEvents = 'none';
+
+  /* Build the files payload — matches your content/ folder structure */
+  const files = {
+    'content/home.json':      data.home,
+    'content/team.json':      data.team,
+    'content/programma.json': data.programma,
+    'content/regels.json':    data.regels,
+    'content/contact.json':   data.contact,
+  };
+
+  try {
+    const res = await fetch('/.netlify/functions/publish-content', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ files }),
+    });
+
+    const json = await res.json();
+
+    if (res.ok && json.success) {
+      /* success */
+      hasUnsavedChanges = false;
+      btn.innerHTML = '<i class="ti ti-check"></i> Gepubliceerd!';
+      pill.classList.remove('saving');
+      pill.innerHTML = '<div class="status-dot"></div> Wijzigingen opgeslagen';
+      showToast('Gepubliceerd — Netlify bouwt de app nu opnieuw','ti-rocket');
+
+      /* show per-file result if anything was skipped */
+      const skipped = json.results.filter(r => r.status !== 'updated');
+      if (skipped.length) {
+        console.warn('Sommige bestanden werden overgeslagen:', skipped);
+      }
+    } else {
+      /* partial or full failure */
+      const errors = (json.results || []).filter(r => r.status === 'error');
+      const msg = errors.length ? errors.map(e => e.path + ': ' + e.reason).join('\n') : (json.error || 'Onbekende fout');
+      btn.innerHTML = '<i class="ti ti-alert-triangle"></i> Mislukt';
+      showToast('Publiceren mislukt — zie console voor details','ti-alert-triangle');
+      console.error('Publish errors:', msg);
+    }
+
+  } catch (err) {
+    /* network error or function not deployed yet */
+    btn.innerHTML = '<i class="ti ti-alert-triangle"></i> Verbindingsfout';
+    showToast('Kan de Netlify Function niet bereiken. Is de site al live?','ti-wifi-off');
+    console.error('Publish fetch error:', err);
+  }
+
+  /* restore button after 3s */
+  setTimeout(() => {
+    btn.innerHTML = '<i class="ti ti-send"></i> Publiceer';
+    btn.style.pointerEvents = '';
+  }, 3000);
+}
+
+/* ══════════════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════════════ */
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('themeIcon').className = isDark ? 'ti ti-sun' : 'ti ti-moon';
+  localStorage.setItem('ivb-cms-theme', isDark ? 'dark' : 'light');
+}
+
+/* ══════════════════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════════════════ */
+let toastTimer;
+function showToast(msg, icon='ti-info-circle') {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toastIcon').className = 'ti ' + icon;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ══════════════════════════════════════════════════════════
+   CONFIRM DELETE MODAL
+══════════════════════════════════════════════════════════ */
+function confirmDelete(title, body, cb) {
+  document.querySelector('#deleteModal .modal-title').textContent = title;
+  document.getElementById('deleteModalBody').innerHTML = body;
+  deleteCallback = cb;
+  document.getElementById('deleteModal').classList.add('open');
+  document.getElementById('confirmDeleteBtn').onclick = () => { cb(); closeDeleteModal(); };
+}
+function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('open'); deleteCallback = null; }
+
+/* ══════════════════════════════════════════════════════════
+   PREVIEW
+══════════════════════════════════════════════════════════ */
+function showPreview() { showToast('Voorvertoning — schakel naar uw telefoon of gebruik de zijbalk rechts','ti-eye'); }
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+(function init() {
+  // restore saved data
+  try {
+    const saved = localStorage.getItem('ivb-cms-data');
+    if (saved) data = JSON.parse(saved);
+  } catch(e) {}
+  // restore theme
+  const savedTheme = localStorage.getItem('ivb-cms-theme');
+  if (savedTheme === 'dark') { isDark = true; document.documentElement.setAttribute('data-theme','dark'); document.getElementById('themeIcon').className = 'ti ti-sun'; }
+  // render
+  navigate('dashboard');
+})();
+</script>
+</body>
+</html>
