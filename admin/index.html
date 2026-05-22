@@ -1,12 +1,1696 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IVB High Care — Beheer</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IVB High Care — Beheer</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+/* ── TOKENS ──────────────────────────────────────────────── */
+:root {
+  --bg:       #0f1117;
+  --bg2:      #161b26;
+  --surface:  #1c2235;
+  --surface2: #232840;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.14);
+  --text1:    #eef1f8;
+  --text2:    #8b95b0;
+  --text3:    #4a5270;
+  --navy:     #2d3b8e;
+  --pink:     #e84f8c;
+  --teal:     #3dbfbf;
+  --gold:     #f5c842;
+  --coral:    #f07a3a;
+  --purple:   #7b5ea7;
+  --sky:      #4ab8e8;
+  --peach:    #f0a07a;
+  --green:    #3dbf7a;
+  --red:      #e05c5c;
+  --radius:   14px;
+  --radius-sm: 8px;
+  --sidebar-w: 230px;
+  --font-body: 'DM Sans', sans-serif;
+  --font-display: 'DM Serif Display', serif;
+  --tr: 0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text1); -webkit-font-smoothing: antialiased; }
+
+/* ── LAYOUT ──────────────────────────────────────────────── */
+#shell {
+  display: flex;
+  height: 100vh;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.sidebar-logo img {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  object-fit: contain;
+}
+
+.sidebar-brand {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--text1);
+  line-height: 1.1;
+}
+
+.sidebar-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-top: 2px;
+  padding-left: 40px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 10px;
+  overflow-y: auto;
+}
+
+.nav-section-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 12px 8px 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--tr);
+  color: var(--text2);
+  font-size: 13.5px;
+  font-weight: 500;
+  position: relative;
+  margin-bottom: 2px;
+  user-select: none;
+}
+
+.nav-item i { font-size: 18px; flex-shrink: 0; }
+.nav-item:hover { background: var(--surface); color: var(--text1); }
+
+.nav-item.active {
+  background: var(--surface);
+  color: var(--text1);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 6px; bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--nav-accent, var(--sky));
+}
+
+.nav-item.active i { color: var(--nav-accent, var(--sky)); }
+
+/* per-section accent colours */
+.nav-item[data-section="home"]    { --nav-accent: var(--sky); }
+.nav-item[data-section="team"]    { --nav-accent: var(--pink); }
+.nav-item[data-section="programma"] { --nav-accent: var(--teal); }
+.nav-item[data-section="regels"]  { --nav-accent: var(--gold); }
+.nav-item[data-section="contact"] { --nav-accent: var(--coral); }
+
+.sidebar-footer {
+  padding: 14px 10px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--sky));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.user-name {
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text1);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logout-btn {
+  font-size: 16px;
+  color: var(--text3);
+  cursor: pointer;
+  transition: color var(--tr);
+  padding: 2px;
+}
+
+.logout-btn:hover { color: var(--red); }
+
+/* ── MAIN AREA ───────────────────────────────────────────── */
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-topbar {
+  height: 60px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+}
+
+.topbar-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--text1);
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all var(--tr);
+}
+
+.btn-primary {
+  background: var(--sky);
+  color: #fff;
+}
+
+.btn-primary:hover { filter: brightness(1.12); }
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-ghost {
+  background: var(--surface);
+  color: var(--text2);
+  border: 1px solid var(--border2);
+}
+
+.btn-ghost:hover { color: var(--text1); background: var(--surface2); }
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none !important;
+  transform: none !important;
+}
+
+.save-status {
+  font-size: 12px;
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.save-status.saved { color: var(--teal); }
+.save-status.saving { color: var(--gold); }
+.save-status.error { color: var(--red); }
+
+.main-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px 48px;
+}
+
+.main-scroll::-webkit-scrollbar { width: 5px; }
+.main-scroll::-webkit-scrollbar-track { background: transparent; }
+.main-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+
+/* ── SECTION PANELS ──────────────────────────────────────── */
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+/* ── FORM ELEMENTS ───────────────────────────────────────── */
+.form-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.form-block-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-block-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.form-block-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text1);
+}
+
+.form-block-sub {
+  font-size: 11.5px;
+  color: var(--text2);
+  margin-top: 1px;
+}
+
+.form-block-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+input[type="text"],
+textarea,
+select {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text1);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  padding: 10px 12px;
+  transition: border-color var(--tr), box-shadow var(--tr);
+  width: 100%;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(74,184,232,0.12);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.6;
+}
+
+select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b95b0' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* ── ICON COLOUR PREVIEW ─────────────────────────────────── */
+.select-with-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-preview {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+  transition: all var(--tr);
+}
+
+/* ── LIST EDITOR ─────────────────────────────────────────── */
+.list-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list-item-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list-item-row input[type="text"] {
+  flex: 1;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border2);
+  background: var(--bg2);
+  color: var(--text2);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--tr);
+}
+
+.icon-btn:hover { background: var(--surface2); color: var(--text1); }
+.icon-btn.danger:hover { background: rgba(224,92,92,0.15); color: var(--red); border-color: var(--red); }
+.icon-btn.success:hover { background: rgba(61,191,122,0.15); color: var(--green); border-color: var(--green); }
+
+/* ── SCHEDULE EDITOR ─────────────────────────────────────── */
+.schedule-day-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.schedule-day-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.schedule-day-header input {
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--teal);
+}
+
+.schedule-rows {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.schedule-row-edit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.schedule-row-edit .time-input {
+  width: 115px;
+  flex-shrink: 0;
+}
+
+/* ── PHASE EDITOR ────────────────────────────────────────── */
+.phase-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.phase-item .field { margin-bottom: 8px; }
+.phase-item .field:last-child { margin-bottom: 0; }
+
+/* ── PERSON CARD EDITOR ──────────────────────────────────── */
+.person-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.person-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+
+.person-avatar-preview {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  transition: all var(--tr);
+}
+
+.person-card-title { font-size: 13.5px; font-weight: 600; color: var(--text1); flex: 1; }
+.person-card-sub { font-size: 11.5px; color: var(--text2); }
+.person-card-body { padding: 14px; display: none; }
+.person-card.expanded .person-card-body { display: block; }
+.person-card-chevron { font-size: 17px; color: var(--text3); transition: transform 0.2s ease; }
+.person-card.expanded .person-card-chevron { transform: rotate(180deg); }
+
+/* ── CARD ACCORDION (for list-based sections) ────────────── */
+.card-editor {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.card-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--tr);
+}
+
+.card-editor-header:hover { background: var(--surface2); }
+
+.card-editor-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.card-editor-meta { flex: 1; min-width: 0; }
+.card-editor-title { font-size: 13.5px; font-weight: 600; color: var(--text1); }
+.card-editor-sub { font-size: 11.5px; color: var(--text2); margin-top: 2px; }
+
+.card-editor-chevron { font-size: 18px; color: var(--text3); transition: transform 0.22s ease; flex-shrink: 0; }
+.card-editor.open .card-editor-chevron { transform: rotate(180deg); color: var(--sky); }
+
+.card-editor-body {
+  border-top: 1px solid var(--border);
+  padding: 18px;
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-editor.open .card-editor-body { display: flex; }
+
+/* ── COLOUR CLASSES (mirrors app) ────────────────────────── */
+.ic-sky    { background: linear-gradient(135deg,#2980b9,#4ab8e8); }
+.ic-pink   { background: linear-gradient(135deg,#a01860,#e84f8c); }
+.ic-teal   { background: linear-gradient(135deg,#1a8080,#3dbfbf); }
+.ic-gold   { background: linear-gradient(135deg,#b8860b,#f5c842); }
+.ic-coral  { background: linear-gradient(135deg,#b84a10,#f07a3a); }
+.ic-purple { background: linear-gradient(135deg,#4a2a7a,#7b5ea7); }
+.ic-navy   { background: linear-gradient(135deg,#1a2060,#2d3b8e); }
+.ic-peach  { background: linear-gradient(135deg,#b85530,#f0a07a); }
+.ic-red    { background: linear-gradient(135deg,#8b1a1a,#e05c5c); }
+.ic-green  { background: linear-gradient(135deg,#1a5a2a,#3dbf7a); }
+
+.av-sky    { background: linear-gradient(135deg,#1a6090,#4ab8e8); }
+.av-teal   { background: linear-gradient(135deg,#0a5050,#3dbfbf); }
+.av-pink   { background: linear-gradient(135deg,#8a1050,#e84f8c); }
+.av-coral  { background: linear-gradient(135deg,#8a3010,#f07a3a); }
+.av-gold   { background: linear-gradient(135deg,#8a6600,#f5c842); }
+.av-purple { background: linear-gradient(135deg,#3a1a60,#7b5ea7); }
+
+/* ── SECTION DIVIDER ─────────────────────────────────────── */
+.section-divider {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── ADD BUTTON ──────────────────────────────────────────── */
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border2);
+  background: transparent;
+  color: var(--text3);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--tr);
+  width: 100%;
+}
+
+.add-btn:hover {
+  border-color: var(--sky);
+  color: var(--sky);
+  background: rgba(74,184,232,0.05);
+}
+
+/* ── TOAST ───────────────────────────────────────────────── */
+#toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 40px;
+  padding: 10px 20px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: all 0.25s ease;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#toast.toast-ok { border-color: var(--teal); }
+#toast.toast-ok i { color: var(--teal); }
+#toast.toast-err { border-color: var(--red); }
+#toast.toast-err i { color: var(--red); }
+
+/* ── AUTH SCREEN ─────────────────────────────────────────── */
+#auth-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.auth-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+}
+
+.auth-logo {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  border-radius: 13px;
+  overflow: hidden;
+}
+
+.auth-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--text1);
+  margin-bottom: 6px;
+}
+
+.auth-sub {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 24px;
+  line-height: 1.55;
+}
+
+/* ── NOTICE BAR ──────────────────────────────────────────── */
+.notice-bar {
+  background: rgba(74,184,232,0.08);
+  border: 1px solid rgba(74,184,232,0.18);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--text2);
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.notice-bar i { color: var(--sky); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── RESPONSIVE: mobile sidebar collapse ─────────────────── */
+@media (max-width: 700px) {
+  #sidebar { display: none; }
+}
+</style>
 </head>
 <body>
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="../icon-512.png" alt="IVB">
+    </div>
+    <div class="auth-title">IVB High Care</div>
+    <div class="auth-sub">Beheerpaneel — Log in om inhoud te bewerken.</div>
+    <button class="btn btn-primary" id="loginBtn" style="width:100%;justify-content:center;">
+      <i class="ti ti-login"></i> Inloggen
+    </button>
+  </div>
+</div>
+
+<!-- MAIN SHELL -->
+<div id="shell" style="display:none;">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="../icon-512.png" alt="IVB">
+        <div class="sidebar-brand">IVB High Care</div>
+      </div>
+      <div class="sidebar-label">Beheerpaneel</div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Inhoud</div>
+      <div class="nav-item active" data-section="home" onclick="switchSection('home')">
+        <i class="ti ti-home"></i> Home pagina
+      </div>
+      <div class="nav-item" data-section="team" onclick="switchSection('team')">
+        <i class="ti ti-users"></i> Behandelteam
+      </div>
+      <div class="nav-item" data-section="programma" onclick="switchSection('programma')">
+        <i class="ti ti-calendar"></i> Dagprogramma
+      </div>
+      <div class="nav-item" data-section="regels" onclick="switchSection('regels')">
+        <i class="ti ti-clipboard-list"></i> Regels &amp; Visie
+      </div>
+      <div class="nav-item" data-section="contact" onclick="switchSection('contact')">
+        <i class="ti ti-phone"></i> Contact
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-name" id="userName">Laden...</div>
+        <div class="logout-btn" title="Uitloggen" onclick="doLogout()">
+          <i class="ti ti-logout"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div class="main-topbar">
+      <div class="topbar-title" id="topbarTitle">Home pagina</div>
+      <div class="topbar-actions">
+        <div class="save-status" id="saveStatus"></div>
+        <button class="btn btn-ghost" onclick="discardChanges()">
+          <i class="ti ti-refresh"></i> Herladen
+        </button>
+        <button class="btn btn-primary" id="saveBtn" onclick="saveCurrentSection()">
+          <i class="ti ti-device-floppy"></i> Opslaan
+        </button>
+      </div>
+    </div>
+
+    <div class="main-scroll" id="mainScroll">
+
+      <!-- ── HOME ────────────────────────────────────────── -->
+      <div class="section-panel active" id="panel-home">
+        <div class="notice-bar">
+          <i class="ti ti-info-circle"></i>
+          <span>Wijzigingen worden opgeslagen als nieuw commit in de Git-repository via Netlify Git Gateway.</span>
+        </div>
+
+        <div class="form-block">
+          <div class="form-block-header">
+            <div class="form-block-icon ic-sky"><i class="ti ti-home"></i></div>
+            <div>
+              <div class="form-block-title">Hero sectie</div>
+              <div class="form-block-sub">Welkomsttitel en introductietekst</div>
+            </div>
+          </div>
+          <div class="form-block-body">
+            <div class="field">
+              <label>Welkomsttitel</label>
+              <input type="text" id="hero_title">
+            </div>
+            <div class="field">
+              <label>Afdelingsnaam (onder titel)</label>
+              <input type="text" id="hero_ward">
+            </div>
+            <div class="field">
+              <label>Welkomsttekst</label>
+              <textarea id="hero_body" style="min-height:80px;"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-block">
+          <div class="form-block-header">
+            <div class="form-block-icon ic-teal"><i class="ti ti-info-circle"></i></div>
+            <div>
+              <div class="form-block-title">Mededeling</div>
+              <div class="form-block-sub">Blauw informatieblokje op de homepage</div>
+            </div>
+          </div>
+          <div class="form-block-body">
+            <div class="field">
+              <label>Mededelingstekst</label>
+              <textarea id="notice_text" style="min-height:68px;"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-block">
+          <div class="form-block-header">
+            <div class="form-block-icon ic-navy"><i class="ti ti-folder-open"></i></div>
+            <div>
+              <div class="form-block-title">Informatiemap</div>
+              <div class="form-block-sub">Beschrijving in het uitklapblok onderaan</div>
+            </div>
+          </div>
+          <div class="form-block-body">
+            <div class="field">
+              <label>Beschrijving</label>
+              <textarea id="infomap_body" style="min-height:80px;"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TEAM ─────────────────────────────────────────── -->
+      <div class="section-panel" id="panel-team">
+        <div class="notice-bar">
+          <i class="ti ti-info-circle"></i>
+          <span>Klik op een kaart om te bewerken. Volgorde aanpassen: versleep de kaarten (binnenkort).</span>
+        </div>
+        <div id="team-cards-editor"></div>
+      </div>
+
+      <!-- ── PROGRAMMA ─────────────────────────────────────── -->
+      <div class="section-panel" id="panel-programma">
+        <div class="notice-bar">
+          <i class="ti ti-info-circle"></i>
+          <span>Klik op een kaart om het dagschema of de modulelijst te bewerken.</span>
+        </div>
+        <div id="programma-cards-editor"></div>
+      </div>
+
+      <!-- ── REGELS ─────────────────────────────────────────── -->
+      <div class="section-panel" id="panel-regels">
+        <div class="notice-bar">
+          <i class="ti ti-info-circle"></i>
+          <span>Elke kaart heeft eigen velden afhankelijk van type: verboden items, tijden, fases, etc.</span>
+        </div>
+        <div id="regels-cards-editor"></div>
+      </div>
+
+      <!-- ── CONTACT ────────────────────────────────────────── -->
+      <div class="section-panel" id="panel-contact">
+        <div class="notice-bar">
+          <i class="ti ti-info-circle"></i>
+          <span>Beheer contactpersonen en openingstijden.</span>
+        </div>
+        <div id="contact-editor"></div>
+      </div>
+
+    </div><!-- /main-scroll -->
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<!-- TOAST -->
+<div id="toast"><i class="ti ti-check"></i> <span id="toastMsg"></span></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════════ */
+let currentSection = 'home';
+let data = { home: null, team: null, programma: null, regels: null, contact: null };
+let token = null;
+let currentUser = null;
+
+const SECTION_TITLES = {
+  home: 'Home pagina',
+  team: 'Behandelteam',
+  programma: 'Dagprogramma',
+  regels: 'Regels & Visie',
+  contact: 'Contact'
+};
+
+const FILE_PATHS = {
+  home:      'content/home.json',
+  team:      'content/team.json',
+  programma: 'content/programma.json',
+  regels:    'content/regels.json',
+  contact:   'content/contact.json'
+};
+
+/* ═══════════════════════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════════════════════ */
+document.getElementById('loginBtn').onclick = () => netlifyIdentity.open();
+
+window.netlifyIdentity.on('init', user => {
+  if (user) initApp(user);
+});
+
+window.netlifyIdentity.on('login', user => {
+  netlifyIdentity.close();
+  initApp(user);
+});
+
+window.netlifyIdentity.on('logout', () => {
+  document.getElementById('shell').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+  token = null; currentUser = null;
+});
+
+function doLogout() { netlifyIdentity.logout(); }
+
+async function initApp(user) {
+  currentUser = user;
+  token = user.token?.access_token;
+
+  const email = user.email || '';
+  const initials = email.slice(0,2).toUpperCase();
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('userName').textContent = email;
+
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('shell').style.display = 'flex';
+
+  await loadAllData();
+  renderCurrentSection();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GIT GATEWAY
+═══════════════════════════════════════════════════════════ */
+async function getGwToken() {
+  const user = netlifyIdentity.currentUser();
+  if (!user) throw new Error('Niet ingelogd');
+  await user.jwt();          // refresh if needed
+  return user.token.access_token;
+}
+
+async function gwFetch(path) {
+  const t = await getGwToken();
+  const res = await fetch(`/.netlify/git/github/contents/${path}`, {
+    headers: { Authorization: `Bearer ${t}` }
+  });
+  if (!res.ok) throw new Error(`Git fetch mislukt: ${res.status}`);
+  const json = await res.json();
+  return { content: JSON.parse(atob(json.content.replace(/\n/g,''))), sha: json.sha };
+}
+
+async function gwSave(path, content, sha, message) {
+  const t = await getGwToken();
+  const res = await fetch(`/.netlify/git/github/contents/${path}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${t}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      message,
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
+      sha
+    })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Opslaan mislukt: ${res.status}`);
+  }
+  return res.json();
+}
+
+let shaCache = {};
+
+async function loadAllData() {
+  setSaveStatus('saving', 'Laden...');
+  try {
+    for (const key of Object.keys(FILE_PATHS)) {
+      const { content, sha } = await gwFetch(FILE_PATHS[key]);
+      data[key] = content;
+      shaCache[key] = sha;
+    }
+    setSaveStatus('saved', 'Geladen');
+    setTimeout(() => setSaveStatus('',''), 2000);
+  } catch(e) {
+    setSaveStatus('error', 'Laadfouten — controleer verbinding');
+    console.error(e);
+  }
+}
+
+async function saveCurrentSection() {
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  setSaveStatus('saving', 'Opslaan...');
+  try {
+    const payload = readCurrentForm();
+    const sha = shaCache[currentSection];
+    const path = FILE_PATHS[currentSection];
+    const result = await gwSave(path, payload, sha, `beheer: update ${currentSection}`);
+    shaCache[currentSection] = result.content.sha;
+    data[currentSection] = payload;
+    setSaveStatus('saved', 'Opgeslagen ✓');
+    showToast('ok', 'Wijzigingen opgeslagen!');
+    setTimeout(() => setSaveStatus('',''), 3000);
+  } catch(e) {
+    setSaveStatus('error', e.message);
+    showToast('err', 'Opslaan mislukt');
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function discardChanges() {
+  setSaveStatus('saving', 'Herladen...');
+  try {
+    const { content, sha } = await gwFetch(FILE_PATHS[currentSection]);
+    data[currentSection] = content;
+    shaCache[currentSection] = sha;
+    renderCurrentSection();
+    setSaveStatus('saved', 'Herladen ✓');
+    showToast('ok', 'Herladen vanuit repository');
+    setTimeout(() => setSaveStatus('',''), 2000);
+  } catch(e) {
+    setSaveStatus('error', 'Herladen mislukt');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════ */
+function switchSection(section) {
+  currentSection = section;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector(`.nav-item[data-section="${section}"]`).classList.add('active');
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`panel-${section}`).classList.add('active');
+  document.getElementById('topbarTitle').textContent = SECTION_TITLES[section];
+  document.getElementById('mainScroll').scrollTop = 0;
+  renderCurrentSection();
+}
+
+function renderCurrentSection() {
+  if (!data[currentSection]) return;
+  switch(currentSection) {
+    case 'home':      renderHome();      break;
+    case 'team':      renderCards('team'); break;
+    case 'programma': renderCards('programma'); break;
+    case 'regels':    renderCards('regels'); break;
+    case 'contact':   renderContact();   break;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   READ FORM → JSON
+═══════════════════════════════════════════════════════════ */
+function readCurrentForm() {
+  switch(currentSection) {
+    case 'home':      return readHome();
+    case 'team':      return readCards('team');
+    case 'programma': return readCards('programma');
+    case 'regels':    return readCards('regels');
+    case 'contact':   return readContact();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HOME
+═══════════════════════════════════════════════════════════ */
+function renderHome() {
+  const d = data.home;
+  document.getElementById('hero_title').value = d.hero_title || '';
+  document.getElementById('hero_ward').value  = d.hero_ward  || '';
+  document.getElementById('hero_body').value  = d.hero_body  || '';
+  document.getElementById('notice_text').value = d.notice_text || '';
+  document.getElementById('infomap_body').value = d.infomap_body || '';
+}
+
+function readHome() {
+  return {
+    hero_title:   v('hero_title'),
+    hero_ward:    v('hero_ward'),
+    hero_body:    v('hero_body'),
+    notice_text:  v('notice_text'),
+    infomap_body: v('infomap_body')
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD SECTIONS (team / programma / regels)
+═══════════════════════════════════════════════════════════ */
+const ICON_OPTIONS = {
+  team: [
+    {v:'ti-clipboard-heart',l:'Klembord hart'},{v:'ti-brain',l:'Hersenen'},{v:'ti-stethoscope',l:'Stethoscoop'},
+    {v:'ti-building-community',l:'Gemeenschap'},{v:'ti-user-heart',l:'Hart gebruiker'},{v:'ti-sparkles',l:'Sterren'},
+    {v:'ti-user-star',l:'Ster gebruiker'},{v:'ti-network',l:'Netwerk'},{v:'ti-messages',l:'Berichten'},
+    {v:'ti-phone',l:'Telefoon'},{v:'ti-shield-check',l:'Schild check'}
+  ],
+  programma: [
+    {v:'ti-palette',l:'Palet'},{v:'ti-plant',l:'Plant'},{v:'ti-run',l:'Hardlopen'},
+    {v:'ti-puzzle',l:'Puzzel'},{v:'ti-sofa',l:'Bank/sofa'},{v:'ti-clock',l:'Klok'},
+    {v:'ti-calendar',l:'Kalender'}
+  ],
+  regels: [
+    {v:'ti-eye',l:'Oog'},{v:'ti-coffee',l:'Koffie'},{v:'ti-moon',l:'Maan'},
+    {v:'ti-device-mobile',l:'Mobiel'},{v:'ti-ban',l:'Verbod'},{v:'ti-smoking',l:'Roken'},
+    {v:'ti-bottle',l:'Fles'},{v:'ti-tools',l:'Gereedschap'},{v:'ti-camera-off',l:'Camera uit'},
+    {v:'ti-shield-check',l:'Schild check'},{v:'ti-list-check',l:'Lijst check'}
+  ]
+};
+
+const COLOR_OPTIONS = [
+  {v:'ic-sky',l:'Blauw (sky)'},{v:'ic-pink',l:'Roze'},{v:'ic-teal',l:'Teal/groen'},
+  {v:'ic-gold',l:'Goud/geel'},{v:'ic-coral',l:'Koraal/oranje'},{v:'ic-purple',l:'Paars'},
+  {v:'ic-navy',l:'Donkerblauw'},{v:'ic-peach',l:'Perzik'},{v:'ic-green',l:'Groen'},
+  {v:'ic-red',l:'Rood'}
+];
+
+function iconSelect(id, section, current) {
+  const opts = (ICON_OPTIONS[section] || []).map(o =>
+    `<option value="${o.v}" ${o.v===current?'selected':''}>${o.l}</option>`
+  ).join('');
+  return `<select id="${id}" onchange="updateCardPreview(this)">${opts}</select>`;
+}
+
+function colorSelect(id, current, section) {
+  const opts = COLOR_OPTIONS.map(o =>
+    `<option value="${o.v}" ${o.v===current?'selected':''}>${o.l}</option>`
+  ).join('');
+  return `
+    <div class="select-with-preview">
+      <div class="color-preview ${current}" id="${id}-preview"></div>
+      <select id="${id}" onchange="updateColorPreview('${id}')" style="flex:1;">${opts}</select>
+    </div>`;
+}
+
+function updateCardPreview(sel) {
+  const card = sel.closest('.card-editor');
+  if (!card) return;
+  const iconEl = card.querySelector('.card-editor-icon');
+  const colorSel = card.querySelector('[id$="-color"]');
+  if (iconEl) iconEl.innerHTML = `<i class="ti ${sel.value}"></i>`;
+}
+
+function updateColorPreview(selId) {
+  const sel = document.getElementById(selId);
+  const preview = document.getElementById(selId + '-preview');
+  if (preview) {
+    preview.className = 'color-preview ' + sel.value;
+    const cardIcon = sel.closest('.card-editor')?.querySelector('.card-editor-icon');
+    if (cardIcon) {
+      cardIcon.className = 'card-editor-icon ' + sel.value;
+    }
+  }
+}
+
+function renderCards(section) {
+  const cards = data[section].cards;
+  const container = document.getElementById(`${section}-cards-editor`);
+  container.innerHTML = cards.map((card, idx) => cardEditorHTML(card, idx, section)).join('');
+}
+
+function cardEditorHTML(card, idx, section) {
+  const isTeam     = section === 'team';
+  const isProgram  = section === 'programma';
+  const isRegels   = section === 'regels';
+
+  let extraFields = '';
+
+  if (isTeam) {
+    extraFields = `
+      <div class="field">
+        <label>Tekst</label>
+        <textarea data-field="body" style="min-height:100px;">${esc(card.body||'')}</textarea>
+      </div>`;
+  }
+
+  if (isProgram) {
+    // body
+    extraFields += `
+      <div class="field">
+        <label>Tekst (optioneel)</label>
+        <textarea data-field="body" style="min-height:70px;">${esc(card.body||'')}</textarea>
+      </div>`;
+    // modules list
+    extraFields += `
+      <div class="section-divider">Moduleslijst</div>
+      <div class="list-editor" id="ml-${idx}">
+        ${(card.modules_list||[]).map((m,mi) => moduleItemHTML(m,idx,mi)).join('')}
+      </div>
+      <button class="add-btn" onclick="addModuleItem(${idx})"><i class="ti ti-plus"></i> Module toevoegen</button>`;
+    // schedule
+    extraFields += `
+      <div class="section-divider">Rooster</div>
+      <div id="sched-${idx}">
+        ${(card.schedule||[]).map((day,di) => schedDayHTML(day,idx,di)).join('')}
+      </div>
+      <button class="add-btn" onclick="addSchedDay(${idx})"><i class="ti ti-plus"></i> Dag toevoegen</button>`;
+  }
+
+  if (isRegels) {
+    extraFields += `
+      <div class="field">
+        <label>Tekst (gebruik lege regel voor alinea)</label>
+        <textarea data-field="body" style="min-height:90px;">${esc(card.body||'')}</textarea>
+      </div>
+      <div class="field">
+        <label>Waarschuwing (geel blokje, optioneel)</label>
+        <input type="text" data-field="warning" value="${esc(card.warning||'')}">
+      </div>`;
+
+    // rules list
+    extraFields += `
+      <div class="section-divider">Verboden items</div>
+      <div class="list-editor" id="rules-${idx}">
+        ${(card.rules||[]).map((r,ri) => ruleItemHTML(r,idx,ri)).join('')}
+      </div>
+      <button class="add-btn" onclick="addRuleItem(${idx})"><i class="ti ti-plus"></i> Regel toevoegen</button>`;
+
+    // tijden
+    extraFields += `
+      <div class="section-divider">Tijden</div>
+      <div id="tijden-${idx}">
+        ${(card.tijden||[]).map((t,ti) => tijdRowHTML(t,idx,ti,'tijden')).join('')}
+      </div>
+      <button class="add-btn" onclick="addTijdRow(${idx})"><i class="ti ti-plus"></i> Tijd toevoegen</button>`;
+
+    // phases
+    extraFields += `
+      <div class="section-divider">Behandelfases (alleen Visie kaart)</div>
+      <div id="phases-${idx}">
+        ${(card.phases||[]).map((ph,pi) => phaseHTML(ph,idx,pi)).join('')}
+      </div>
+      <button class="add-btn" onclick="addPhase(${idx})"><i class="ti ti-plus"></i> Fase toevoegen</button>`;
+  }
+
+  return `
+  <div class="card-editor" id="card-${section}-${idx}">
+    <div class="card-editor-header" onclick="toggleCard('card-${section}-${idx}')">
+      <div class="card-editor-icon ${esc(card.color)}"><i class="ti ${esc(card.icon)}"></i></div>
+      <div class="card-editor-meta">
+        <div class="card-editor-title">${esc(card.title)}</div>
+        <div class="card-editor-sub">${esc(card.subtitle||'')}</div>
+      </div>
+      <i class="ti ti-chevron-down card-editor-chevron"></i>
+    </div>
+    <div class="card-editor-body">
+      <input type="hidden" data-field="id" value="${esc(card.id)}">
+      <div class="field-row">
+        <div class="field">
+          <label>Icoon</label>
+          ${iconSelect(`ci-icon-${section}-${idx}`, section, card.icon)}
+        </div>
+        <div class="field">
+          <label>Kleur</label>
+          ${colorSelect(`ci-color-${section}-${idx}`, card.color, section)}
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Titel</label>
+          <input type="text" data-field="title" value="${esc(card.title)}"
+            oninput="updateCardHeader(this,'${section}',${idx})">
+        </div>
+        <div class="field">
+          <label>Subtitel</label>
+          <input type="text" data-field="subtitle" value="${esc(card.subtitle||'')}">
+        </div>
+      </div>
+      ${extraFields}
+    </div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function updateCardHeader(input, section, idx) {
+  const card = document.getElementById(`card-${section}-${idx}`);
+  if (card) card.querySelector('.card-editor-title').textContent = input.value;
+}
+
+/* ── Schedule helpers ────────────────────────────────────── */
+function schedDayHTML(day, cardIdx, dayIdx) {
+  const rows = (day.rows||[]).map((r,ri) => schedRowHTML(r,cardIdx,dayIdx,ri)).join('');
+  return `
+  <div class="schedule-day-block" id="sday-${cardIdx}-${dayIdx}">
+    <div class="schedule-day-header">
+      <i class="ti ti-calendar-week" style="color:var(--teal);font-size:15px;"></i>
+      <input type="text" class="time-input" style="width:auto;flex:1;" value="${esc(day.day)}" placeholder="Dag naam">
+      <button class="icon-btn danger" onclick="removeSchedDay(${cardIdx},${dayIdx})" title="Dag verwijderen"><i class="ti ti-trash"></i></button>
+    </div>
+    <div class="schedule-rows" id="srows-${cardIdx}-${dayIdx}">${rows}</div>
+    <div style="padding:4px 12px 10px;">
+      <button class="add-btn" style="font-size:12px;padding:7px;" onclick="addSchedRow(${cardIdx},${dayIdx})"><i class="ti ti-plus"></i> Tijdslot</button>
+    </div>
+  </div>`;
+}
+
+function schedRowHTML(r, ci, di, ri) {
+  return `
+  <div class="schedule-row-edit" id="srow-${ci}-${di}-${ri}">
+    <input type="text" class="time-input" placeholder="09:00 – 10:00" value="${esc(r.time||'')}">
+    <input type="text" style="flex:1;" placeholder="Activiteit" value="${esc(r.activity||'')}">
+    <button class="icon-btn danger" onclick="removeSchedRow(${ci},${di},${ri})"><i class="ti ti-trash"></i></button>
+  </div>`;
+}
+
+function addSchedDay(cardIdx) {
+  const cont = document.getElementById(`sched-${cardIdx}`);
+  const di = cont.querySelectorAll('.schedule-day-block').length;
+  cont.insertAdjacentHTML('beforeend', schedDayHTML({day:'Nieuwe dag',rows:[]}, cardIdx, di));
+}
+
+function addSchedRow(ci, di) {
+  const cont = document.getElementById(`srows-${ci}-${di}`);
+  const ri = cont.querySelectorAll('.schedule-row-edit').length;
+  cont.insertAdjacentHTML('beforeend', schedRowHTML({time:'',activity:''}, ci, di, ri));
+}
+
+function removeSchedDay(ci, di) { document.getElementById(`sday-${ci}-${di}`)?.remove(); }
+function removeSchedRow(ci, di, ri) { document.getElementById(`srow-${ci}-${di}-${ri}`)?.remove(); }
+
+/* ── Module list helpers ─────────────────────────────────── */
+function moduleItemHTML(val, ci, mi) {
+  return `
+  <div class="list-item-row" id="ml-item-${ci}-${mi}">
+    <input type="text" value="${esc(val)}" placeholder="Module naam">
+    <button class="icon-btn danger" onclick="this.closest('.list-item-row').remove()"><i class="ti ti-trash"></i></button>
+  </div>`;
+}
+
+function addModuleItem(ci) {
+  const cont = document.getElementById(`ml-${ci}`);
+  const mi = cont.querySelectorAll('.list-item-row').length;
+  cont.insertAdjacentHTML('beforeend', moduleItemHTML('', ci, mi));
+}
+
+/* ── Rule list helpers ───────────────────────────────────── */
+function ruleItemHTML(val, ci, ri) {
+  return `
+  <div class="list-item-row" id="rule-item-${ci}-${ri}">
+    <input type="text" value="${esc(val)}" placeholder="Verboden item">
+    <button class="icon-btn danger" onclick="this.closest('.list-item-row').remove()"><i class="ti ti-trash"></i></button>
+  </div>`;
+}
+
+function addRuleItem(ci) {
+  const cont = document.getElementById(`rules-${ci}`);
+  const ri = cont.querySelectorAll('.list-item-row').length;
+  cont.insertAdjacentHTML('beforeend', ruleItemHTML('', ci, ri));
+}
+
+/* ── Tijden helpers ──────────────────────────────────────── */
+function tijdRowHTML(t, ci, ti, ns) {
+  return `
+  <div class="list-item-row" id="${ns}-row-${ci}-${ti}">
+    <input type="text" style="flex:1.2;" placeholder="Label" value="${esc(t.label||'')}">
+    <input type="text" style="flex:1;" placeholder="Tijd" value="${esc(t.tijd||'')}">
+    <button class="icon-btn danger" onclick="this.closest('.list-item-row').remove()"><i class="ti ti-trash"></i></button>
+  </div>`;
+}
+
+function addTijdRow(ci) {
+  const cont = document.getElementById(`tijden-${ci}`);
+  const ti = cont.querySelectorAll('.list-item-row').length;
+  cont.insertAdjacentHTML('beforeend', tijdRowHTML({label:'',tijd:''}, ci, ti, 'tijden'));
+}
+
+/* ── Phase helpers ───────────────────────────────────────── */
+function phaseHTML(ph, ci, pi) {
+  return `
+  <div class="phase-item" id="phase-${ci}-${pi}">
+    <div class="field">
+      <label>Fase titel</label>
+      <input type="text" placeholder="Fase titel" value="${esc(ph.title||'')}">
+    </div>
+    <div class="field">
+      <label>Beschrijving</label>
+      <textarea style="min-height:60px;">${esc(ph.desc||'')}</textarea>
+    </div>
+    <button class="icon-btn danger" style="margin-top:4px;" onclick="this.closest('.phase-item').remove()"><i class="ti ti-trash"></i> Fase verwijderen</button>
+  </div>`;
+}
+
+function addPhase(ci) {
+  const cont = document.getElementById(`phases-${ci}`);
+  const pi = cont.querySelectorAll('.phase-item').length;
+  cont.insertAdjacentHTML('beforeend', phaseHTML({title:'',desc:''}, ci, pi));
+}
+
+/* ── READ cards from DOM ─────────────────────────────────── */
+function readCards(section) {
+  const cards = [];
+  document.querySelectorAll(`#${section}-cards-editor .card-editor`).forEach((cardEl, idx) => {
+    const gField = (f) => cardEl.querySelector(`[data-field="${f}"]`)?.value?.trim() || '';
+    const icon   = document.getElementById(`ci-icon-${section}-${idx}`)?.value || '';
+    const color  = document.getElementById(`ci-color-${section}-${idx}`)?.value || '';
+
+    const card = {
+      id:       gField('id'),
+      icon,
+      color,
+      title:    gField('title'),
+      subtitle: gField('subtitle'),
+      body:     gField('body')
+    };
+
+    if (section === 'programma') {
+      // modules_list
+      card.modules_list = [...cardEl.querySelectorAll(`#ml-${idx} .list-item-row input[type="text"]`)]
+        .map(i => i.value.trim()).filter(Boolean);
+      // schedule
+      card.schedule = [];
+      cardEl.querySelectorAll(`#sched-${idx} .schedule-day-block`).forEach(dayEl => {
+        const inputs = dayEl.querySelectorAll('input[type="text"]');
+        const dayName = inputs[0]?.value?.trim() || '';
+        const rows = [...dayEl.querySelectorAll('.schedule-row-edit')].map(rowEl => {
+          const ri = rowEl.querySelectorAll('input');
+          return { time: ri[0]?.value?.trim()||'', activity: ri[1]?.value?.trim()||'' };
+        });
+        card.schedule.push({ day: dayName, rows });
+      });
+    }
+
+    if (section === 'regels') {
+      card.warning = gField('warning');
+      card.rules = [...cardEl.querySelectorAll(`#rules-${idx} .list-item-row input[type="text"]`)]
+        .map(i => i.value.trim()).filter(Boolean);
+      card.tijden = [...cardEl.querySelectorAll(`#tijden-${idx} .list-item-row`)].map(row => {
+        const inp = row.querySelectorAll('input');
+        return { label: inp[0]?.value?.trim()||'', tijd: inp[1]?.value?.trim()||'' };
+      }).filter(t => t.label || t.tijd);
+      card.phases = [...cardEl.querySelectorAll(`#phases-${idx} .phase-item`)].map(ph => {
+        const inp = ph.querySelectorAll('input, textarea');
+        return { title: inp[0]?.value?.trim()||'', desc: inp[1]?.value?.trim()||'' };
+      }).filter(p => p.title || p.desc);
+    }
+
+    cards.push(card);
+  });
+  return { cards };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════════════════ */
+const AVATAR_COLORS = [
+  {v:'av-sky',l:'Blauw'},{v:'av-teal',l:'Teal'},{v:'av-pink',l:'Roze'},
+  {v:'av-coral',l:'Koraal'},{v:'av-gold',l:'Goud'},{v:'av-purple',l:'Paars'}
+];
+const INFO_COLORS = [
+  {v:'ci-sky',l:'Blauw'},{v:'ci-teal',l:'Teal'},{v:'ci-gold',l:'Goud'},{v:'ci-coral',l:'Koraal'}
+];
+
+function renderContact() {
+  const d = data.contact;
+  const cont = document.getElementById('contact-editor');
+
+  const persons = d.persons.map((p,i) => `
+    <div class="person-card" id="person-${i}">
+      <div class="person-card-header" onclick="togglePerson(${i})">
+        <div class="person-avatar-preview ${esc(p.avatar_color)}" id="av-preview-${i}">${esc(p.initials)}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="person-card-title">${esc(p.name)}</div>
+          <div class="person-card-sub">${esc(p.role)}</div>
+        </div>
+        <i class="ti ti-chevron-down person-card-chevron"></i>
+      </div>
+      <div class="person-card-body">
+        <input type="hidden" data-field="id" value="${esc(p.id)}">
+        <div class="field-row" style="margin-bottom:12px;">
+          <div class="field">
+            <label>Initialen</label>
+            <input type="text" data-field="initials" value="${esc(p.initials)}"
+              oninput="document.getElementById('av-preview-${i}').textContent=this.value.slice(0,2)">
+          </div>
+          <div class="field">
+            <label>Avatar kleur</label>
+            <div class="select-with-preview">
+              <div class="person-avatar-preview ${esc(p.avatar_color)}" id="av-col-prev-${i}" style="width:28px;height:28px;font-size:10px;">${esc(p.initials)}</div>
+              <select data-field="avatar_color" onchange="updateAvatarColor(${i},this.value)" style="flex:1;">
+                ${AVATAR_COLORS.map(c=>`<option value="${c.v}" ${c.v===p.avatar_color?'selected':''}>${c.l}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:12px;">
+          <label>Naam</label>
+          <input type="text" data-field="name" value="${esc(p.name)}"
+            oninput="this.closest('.person-card').querySelector('.person-card-title').textContent=this.value">
+        </div>
+        <div class="field" style="margin-bottom:12px;">
+          <label>Rol / beschrijving</label>
+          <input type="text" data-field="role" value="${esc(p.role)}"
+            oninput="this.closest('.person-card').querySelector('.person-card-sub').textContent=this.value">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Contactinfo</label>
+            <input type="text" data-field="info" value="${esc(p.info)}">
+          </div>
+          <div class="field">
+            <label>Info kleur</label>
+            <select data-field="info_color">
+              ${INFO_COLORS.map(c=>`<option value="${c.v}" ${c.v===p.info_color?'selected':''}>${c.l}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const tijden = d.tijden.map((t,ti) => `
+    <div class="list-item-row" id="ctijd-${ti}">
+      <input type="text" style="flex:1.2;" placeholder="Label" value="${esc(t.label)}">
+      <input type="text" style="flex:1;" placeholder="Tijd" value="${esc(t.tijd)}">
+      <button class="icon-btn danger" onclick="this.closest('.list-item-row').remove()"><i class="ti ti-trash"></i></button>
+    </div>`).join('');
+
+  cont.innerHTML = `
+    <div class="section-divider">Contactpersonen</div>
+    <div id="persons-list">${persons}</div>
+
+    <div class="section-divider">Openingstijden</div>
+    <div class="form-block">
+      <div class="form-block-body">
+        <div class="list-editor" id="contact-tijden">${tijden}</div>
+        <button class="add-btn" onclick="addContactTijd()"><i class="ti ti-plus"></i> Tijd toevoegen</button>
+        <div class="field">
+          <label>Toelichting tijden</label>
+          <input type="text" id="tijden_note" value="${esc(d.tijden_note||'')}">
+        </div>
+      </div>
+    </div>`;
+}
+
+function togglePerson(i) {
+  document.getElementById(`person-${i}`)?.classList.toggle('expanded');
+}
+
+function updateAvatarColor(i, val) {
+  document.getElementById(`av-preview-${i}`).className = `person-avatar-preview ${val}`;
+  document.getElementById(`av-col-prev-${i}`).className = `person-avatar-preview ${val}`;
+}
+
+function addContactTijd() {
+  const cont = document.getElementById('contact-tijden');
+  const ti = cont.querySelectorAll('.list-item-row').length;
+  cont.insertAdjacentHTML('beforeend', `
+    <div class="list-item-row" id="ctijd-${ti}">
+      <input type="text" style="flex:1.2;" placeholder="Label" value="">
+      <input type="text" style="flex:1;" placeholder="Tijd" value="">
+      <button class="icon-btn danger" onclick="this.closest('.list-item-row').remove()"><i class="ti ti-trash"></i></button>
+    </div>`);
+}
+
+function readContact() {
+  const persons = [...document.querySelectorAll('#persons-list .person-card')].map(card => {
+    const gf = f => card.querySelector(`[data-field="${f}"]`)?.value?.trim() || '';
+    return {
+      id:           gf('id'),
+      initials:     gf('initials'),
+      avatar_color: gf('avatar_color'),
+      name:         gf('name'),
+      role:         gf('role'),
+      info:         gf('info'),
+      info_color:   gf('info_color')
+    };
+  });
+
+  const tijden = [...document.querySelectorAll('#contact-tijden .list-item-row')].map(row => {
+    const inp = row.querySelectorAll('input');
+    return { label: inp[0]?.value?.trim()||'', tijd: inp[1]?.value?.trim()||'' };
+  }).filter(t => t.label || t.tijd);
+
+  return { persons, tijden, tijden_note: v('tijden_note') };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════════ */
+function v(id) { return document.getElementById(id)?.value?.trim() || ''; }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function setSaveStatus(type, msg) {
+  const el = document.getElementById('saveStatus');
+  el.className = 'save-status' + (type ? ' ' + type : '');
+  el.innerHTML = msg ? `<i class="ti ti-${type==='saving'?'loader':type==='saved'?'circle-check':'alert-circle'}"></i> ${msg}` : '';
+}
+
+let toastTimer;
+function showToast(type, msg) {
+  const toast = document.getElementById('toast');
+  const icon = type === 'ok' ? 'ti-check' : 'ti-x';
+  toast.className = `show toast-${type==='ok'?'ok':'err'}`;
+  toast.innerHTML = `<i class="ti ${icon}"></i> <span>${msg}</span>`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.className = ''; }, 3000);
+}
+</script>
 </body>
 </html>
