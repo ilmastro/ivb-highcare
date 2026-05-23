@@ -6,7 +6,7 @@
       "color": "ic-navy",
       "title": "Behandelcoördinator",
       "subtitle": "Verantwoordelijk voor uw traject",
-      "body": "Uw behandelcoördinator is verantwoordelijk voor uw behandelovereenkomst en uw behandeltraject.\n\nBij opname heeft u een gesprek met de psychiater over uw wensen. U maakt samen afspraken over uw verblijf op IVB HC — waaronder uw doel, bijvoorbeeld waar u naartoe wil na uw verblijf."
+      "body": "Uw behandelcoördinator is verantwoordelijk voor uw behandelovereenkomst en uw behandeltraject.\n\nBij opname heeft u een gesprek met de psychiater over uw wensen."
     },
     {
       "id": "regiebehandelaar",
@@ -14,7 +14,7 @@
       "color": "ic-purple",
       "title": "Regiebehandelaar",
       "subtitle": "Medisch eindverantwoordelijk",
-      "body": "Uw regiebehandelaar kan de psychiater of verpleegkundig specialist zijn. Zij zijn medisch eindverantwoordelijk voor uw behandeling.\n\nOver medicatie beslist de regiebehandelaar in combinatie met uw betrokken behandelaar."
+      "body": "Uw regiebehandelaar kan de psychiater of verpleegkundig specialist zijn. Zij zijn medisch eindverantwoordelijk voor uw behandeling."
     },
     {
       "id": "huisarts",
@@ -38,7 +38,7 @@
       "color": "ic-pink",
       "title": "Ervaringsdeskundige",
       "subtitle": "Lotgenotencontact & gesprek",
-      "body": "Binnen ons team bevindt zich een ervaringsdeskundige. Bij hem kunt u terecht om over uw behandeling te praten vanuit gedeeld perspectief.\n\nEr is ook een familie-ervaringsdeskundige beschikbaar — iemand met persoonlijke ervaring als naaste van iemand met een psychiatrische aandoening."
+      "body": "Binnen ons team bevindt zich een ervaringsdeskundige. Bij hem kunt u terecht om over uw behandeling te praten vanuit gedeeld perspectief."
     },
     {
       "id": "geestelijk",
@@ -46,7 +46,7 @@
       "color": "ic-gold",
       "title": "Geestelijk verzorger",
       "subtitle": "Zingeving en levensvragen",
-      "body": "De geestelijk verzorger biedt ondersteuning bij zingeving, levensvragen, levensbeschouwing en spiritualiteit — ongeacht uw achtergrond of geloofsovertuiging."
+      "body": "De geestelijk verzorger biedt ondersteuning bij zingeving, levensvragen, levensbeschouwing en spiritualiteit."
     },
     {
       "id": "begeleiders",
@@ -54,7 +54,7 @@
       "color": "ic-sky",
       "title": "Persoonlijke begeleiders",
       "subtitle": "4 vaste aanspreekpunten",
-      "body": "Het vaste team bestaat uit verpleegkundigen, agogisch medewerkers, beveiligers en ervaringsdeskundigen. 4 collega's zijn betrokken als uw persoonlijk begeleider.\n\nZij zorgen dat uw vragen op de juiste plek terechtkomen en dat uw verblijf zo prettig mogelijk verloopt."
+      "body": "Het vaste team bestaat uit verpleegkundigen, agogisch medewerkers, beveiligers en ervaringsdeskundigen."
     },
     {
       "id": "netwerk",
@@ -62,7 +62,7 @@
       "color": "ic-peach",
       "title": "Netwerk",
       "subtitle": "Familie en naasten betrekken",
-      "body": "Met uw toestemming wordt uw netwerk nauw betrokken bij uw behandeling om bij te dragen aan uw herstel.\n\nTijdens uw opname maken we een netwerkanalyse waarbij uw netwerk in kaart wordt gebracht. U wordt ondersteund in het behouden, versterken en — indien gewenst — uitbreiden van uw netwerk."
+      "body": "Met uw toestemming wordt uw netwerk nauw betrokken bij uw behandeling om bij te dragen aan uw herstel."
     },
     {
       "id": "overleg",
@@ -70,7 +70,7 @@
       "color": "ic-navy",
       "title": "Overlegvormen",
       "subtitle": "ZAG en Dagelijks Overleg",
-      "body": "ZAG — Zorgafstemmingsgesprek\nGedurende uw opname heeft u met regelmaat een ZAG. Naast uzelf mag een naaste aanwezig zijn, evenals andere betrokkenen. U bespreekt het verdere verloop van uw behandeling samen met de psychiater of behandelcoördinator.\n\nDO — Dagelijks Overleg\nIedere maandag en donderdag om 10:00 vindt er een DO plaats. Hierin bespreekt het behandelteam hoe het de afgelopen dagen is verlopen en kan een verlofplan worden besproken."
+      "body": "ZAG — Zorgafstemmingsgesprek\nGedurende uw opname heeft u met regelmaat een ZAG."
     }
   ]
 }
